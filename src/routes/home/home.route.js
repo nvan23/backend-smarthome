@@ -4,7 +4,7 @@ const sensorsRouter = require('./sensors.route')
 const membersRouter = require('./members.route')
 const router = express.Router()
 
-const userController = require('../../controllers/user.controller')
+const userController = require('../../controllers/user/user.controller')
 const authentication = require('../../middleware/authentication')
 const authorization = require('../../middleware/authorization')
 

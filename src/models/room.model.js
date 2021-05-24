@@ -1,36 +1,30 @@
 const mongoose = require('mongoose')
 
-const homeSchema = mongoose.Schema({
+const roomSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
     trim: true
   },
-  hostId: {
+  homeId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    unique: true,
+    ref: 'Home',
     required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-    lowercase: true,
   },
   isBlock: {
     type: Boolean,
     default: false,
   },
-  rooms: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Room'
-  }],
   sensors: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Sensor'
-  }]
+  }],
+  members: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
 }, { timestamps: true })
 
-const Home = mongoose.model('Home', homeSchema)
+const Room = mongoose.model('Room', roomSchema)
 
-module.exports = Home
+module.exports = Room

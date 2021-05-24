@@ -11,6 +11,12 @@ const userSchema = mongoose.Schema({
     required: true,
     trim: true
   },
+  username: {
+    type: String,
+    unique: true,
+    required: true,
+    trim: true
+  },
   email: {
     type: String,
     required: true,
@@ -18,33 +24,59 @@ const userSchema = mongoose.Schema({
     lowercase: true,
     validate: value => {
       if (!validator.isEmail(value)) {
-        throw new Error({ error: 'Invalid Email address' })
+        throw new Error({ error: 'Invalid email address' })
       }
     }
   },
   password: {
     type: String,
     required: true,
-    minLength: 7
+    validate: value => {
+      if (!validator.isStrongPassword(value, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })) {
+        throw new Error({ error: 'Password is no strong' })
+      }
+    }
   },
-  role: {
-    type: String,
-    enum: ['user', 'admin'],
-    default: 'user',
-    required: true
-  },
-  equipments: [{
+  roles: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Equipment'
+    ref: 'Role',
   }],
-  refreshToken: {
-    type: String,
-    default: '',
+  isBlock: {
+    type: Boolean,
+    default: false,
   },
   tokens: [{
     token: {
       type: String,
     }
+  }],
+  refreshToken: {
+    type: String,
+    default: '',
+  },
+  homeId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Home',
+    default: null,
+  },
+  currentHome: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Home',
+    default: null,
+  },
+  homes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Home'
+  }],
+  rooms: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Room'
   }]
 }, { timestamps: true })
 

@@ -1,16 +1,21 @@
 const mongoose = require('mongoose')
 
-const homeSchema = mongoose.Schema({
+const sensorSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
     trim: true
   },
-  hostId: {
+  homeId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Home',
+    required: true,
+  },
+  roomId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    unique: true,
     required: true,
+    default: null
   },
   description: {
     type: String,
@@ -21,16 +26,12 @@ const homeSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  rooms: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Room'
-  }],
-  sensors: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Sensor'
-  }]
+  isLive: {
+    type: Boolean,
+    default: false,
+  },
 }, { timestamps: true })
 
-const Home = mongoose.model('Home', homeSchema)
+const Sensor = mongoose.model('Sensor', sensorSchema)
 
-module.exports = Home
+module.exports = Sensor

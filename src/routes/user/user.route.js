@@ -1,11 +1,11 @@
 const express = require('express')
-const userController = require('../../controllers/user.controller')
+const userController = require('../../controllers/user/user.controller')
 const authentication = require('../../middleware/authentication')
 
 const router = express.Router()
 
 // Register
-router.post('/register', (__, res) => res.json({ msg: "register" }))
+router.post('/register', userController.register)
 
 //Login a registered user
 router.post('/login', (__, res) => res.json({ msg: "Login" }))
