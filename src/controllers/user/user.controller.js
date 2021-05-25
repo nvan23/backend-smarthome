@@ -1,5 +1,6 @@
 'use strict'
 
+const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const User = require("../../models/user.model")
 
@@ -12,11 +13,12 @@ exports.register = async (req, res) => {
 
     const user = new User(req.body)
     await user.save()
+    await user.initUserRole()
 
     res.status(200).json({ msg: 'Register successfully.' })
 
   } catch (error) {
-    res.status(400).json(error)
+    res.status(400).json(error.errors)
   }
 }
 
@@ -27,20 +29,19 @@ exports.login = async (req, res) => {
   const user = await User.findOne({ email })
 
   if (!user) {
-    return res.status(404).json({ msg: 'Email and password are incorrect.' })
+    return res.status(404).json({ message: 'Email and password are incorrect.' })
   }
 
   const isPasswordMatch = await bcrypt.compare(password, user.password)
 
   if (!isPasswordMatch) {
-    return res.status(404).json({ msg: 'Email and password are incorrect.' })
+    return res.status(404).json({ message: 'Email and password are incorrect.' })
   }
 
   const token = await user.generateAuthToken()
   const refreshToken = await user.generateRefreshToken()
 
   return res.status(200).json({
-    msg: 'Logged in successfully.',
     token,
     refreshToken,
     user,
@@ -74,13 +75,13 @@ exports.getAllEquipmentsOnUser = async (req, res) => {
     })
 }
 
-exports.getProfile = (req, res) => {
+exports.me = (req, res) => {
   User
-    .findById(req.user._id,).select("id name email role equipments tokens")
+    .findById(req.user._id,)
     .then(user => {
       res.status(200).json(user)
     })
-    .catch(error => res.status(404).json(error))
+    .catch(error => res.status(400).json(error))
 }
 
 exports.logout = async (req, res) => {
@@ -97,18 +98,17 @@ exports.logout = async (req, res) => {
     .catch(error => res.status(500).json(error))
 }
 
-exports.logoutAllDevices = async (req, res) => {
+exports.logoutAll = async (req, res) => {
   User
     .findOneAndUpdate(
       { _id: req.user._id },
       {
-        refreshToken: '',
         tokens: [],
       },
       { new: true }
     )
     .then(data => res.status(200).json(data))
-    .catch(error => res.status(500).json(error))
+    .catch(error => res.status(400).json(error))
 }
 
 exports.changeRole = (req, res) => {

@@ -4,6 +4,8 @@ const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { SALT_ROUNDS } = require('../constants/auth');
+const config = require('../config')
+const Role = require('./role.model');
 
 const userSchema = mongoose.Schema({
   name: {
@@ -100,7 +102,7 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.generateAuthToken = async function () {
   // Generate an auth token for the user
   const user = this
-  const token = jwt.sign({ id: user._id }, process.env.APP_SECRET, { expiresIn: process.env.ACCESS_TOKEN_LIFE || '10h' })
+  const token = jwt.sign({ id: user._id }, config.secret, { expiresIn: config.token_life })
   user.tokens = user.tokens.concat({ token })
   await user.save()
   return token
@@ -109,10 +111,20 @@ userSchema.methods.generateAuthToken = async function () {
 userSchema.methods.generateRefreshToken = async function () {
   // Generate an auth token for the user
   const user = this
-  const refreshToken = jwt.sign({}, process.env.APP_SECRET_REFRESH)
+  const refreshToken = jwt.sign({}, config.secret)
   user.refreshToken = refreshToken
   await user.save()
   return refreshToken
+}
+
+userSchema.methods.initUserRole = async function () {
+  // Generate an auth token for the user
+  const user = this
+  const role = await Role.findOne({ key: config.roles.user })
+  if (role) {
+    user.roles = user.roles.concat(role._id)
+  }
+  await user.save()
 }
 
 const User = mongoose.model('User', userSchema)

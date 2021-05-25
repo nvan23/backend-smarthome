@@ -8,16 +8,16 @@ const router = express.Router()
 router.post('/register', userController.register)
 
 //Login a registered user
-router.post('/login', (__, res) => res.json({ msg: "Login" }))
+router.post('/login', userController.login)
 
 // Log user out of the application
-router.post('/me/logout', (__, res) => res.json({ msg: "Logout" }))
+router.post('/me/logout', authentication, userController.logout)
 
 // Log user out of all devices
-router.post('/me/logout-all', (__, res) => res.json({ msg: "logout all" }))
+router.post('/me/logout-all', authentication, userController.logoutAll)
 
 // View logged in user profile
-router.get('/me', (__, res) => res.json({ msg: "View profile" }))
+router.get('/me', authentication, userController.me)
 
 // Reset password
 router.patch('/me/reset-password', (__, res) => res.json({ msg: "Reset password" }))
