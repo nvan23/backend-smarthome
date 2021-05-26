@@ -1,33 +1,33 @@
 const express = require('express')
-const authentication = require('../middleware/authentication')
-const authorization = require('../middleware/authorization')
+const requireAuthentication = require('../middleware/requireAuthentication')
+const requireAuthorization = require('../middleware/requireAuthorization')
 const ticketController = require('../controllers/ticket.controller')
 
 const router = express.Router()
 
 
 // Get all tickets
-router.get('/', authentication, authorization, ticketController.getAllTickets)
+router.get('/', requireAuthentication, requireAuthorization, ticketController.getAllTickets)
 
 // Get all deleted tickets
-router.get('/trash/', authentication, authorization, ticketController.getAllDeletedTickets)
+router.get('/trash/', requireAuthentication, requireAuthorization, ticketController.getAllDeletedTickets)
 
 // restore an deleted ticket
-router.put('/trash/:id', authentication, authorization, ticketController.restoreTicket)
+router.put('/trash/:id', requireAuthentication, requireAuthorization, ticketController.restoreTicket)
 
 // force delete ticket
-router.delete('/trash/:id', authentication, authorization, ticketController.forceDelete)
+router.delete('/trash/:id', requireAuthentication, requireAuthorization, ticketController.forceDelete)
 
 // Get ticket
-router.get('/:id', authentication, authorization, ticketController.getTicket)
+router.get('/:id', requireAuthentication, requireAuthorization, ticketController.getTicket)
 
 // Get all tickets
-router.post('/', authentication, authorization, ticketController.createTicket)
+router.post('/', requireAuthentication, requireAuthorization, ticketController.createTicket)
 
 // edit ticket
-router.put('/:id', authentication, authorization, ticketController.modifyTicket)
+router.put('/:id', requireAuthentication, requireAuthorization, ticketController.modifyTicket)
 
 // soft delete an ticket
-router.delete('/:id', authentication, authorization, ticketController.softDeleteTicket)
+router.delete('/:id', requireAuthentication, requireAuthorization, ticketController.softDeleteTicket)
 
 module.exports = router

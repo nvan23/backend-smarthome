@@ -1,10 +1,11 @@
 const express = require('express')
-const authentication = require('../../middleware/authentication')
+const homeController = require('../../controllers/home')
+const memberController = require('../../controllers/member')
 
 const router = express.Router()
 
 // get all members of the home
-router.get('/', (__, res) => res.json({ msg: "get all members of the home" }))
+router.get('/', memberController.getAllMembers)
 
 // get a member of the home
 router.get('/:id', (__, res) => res.json({ msg: "get a member of the home" }))

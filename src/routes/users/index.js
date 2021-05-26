@@ -1,12 +1,12 @@
 const express = require('express')
-const usersController = require('../../controllers/users/users.controller')
-const authentication = require('../../middleware/authentication')
-const authorization = require('../../middleware/authorization')
+const usersController = require('../../controllers/users')
+const requireAuthentication = require('../../middleware/requireAuthentication')
+const requireAuthorization = require('../../middleware/requireAuthorization')
 
 const router = express.Router()
 
 // get all users
-router.get('/', authorization, usersController.getAllUsers)
+router.get('/', usersController.getAllUsers)
 
 // get an user
 router.get('/:id', usersController.getUser)
@@ -14,17 +14,20 @@ router.get('/:id', usersController.getUser)
 // change role of an user
 router.patch('/:id/role/change', usersController.changeRole)
 
-// change role of an user into user role
+// reset role of an user
 router.patch('/:id/role/reset', usersController.resetRole)
+
+// reset home of an user
+router.patch('/:id/home/reset', usersController.resetHome)
 
 // update all roles of all users
 router.patch('/roles/update-all', usersController.updateAllRolesOfAllUsers)
 
 // block user
-router.patch('/block/:id', usersController.block)
+router.patch('/block/:id', usersController.block(true))
 
 // active user
-router.patch('/active/:id', usersController.active)
+router.patch('/active/:id', usersController.block(false))
 
 // delete an user
 router.delete('/:id', usersController.delete)

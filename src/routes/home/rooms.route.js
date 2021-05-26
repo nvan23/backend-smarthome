@@ -1,16 +1,17 @@
 const express = require('express')
-const authentication = require('../../middleware/authentication')
+
+const roomController = require('../../controllers/room')
 
 const router = express.Router()
 
-// create a new room
-router.post('/', (__, res) => res.json({ msg: "create a new room" }))
-
 // get all rooms
-router.get('/', (__, res) => res.json({ msg: "get all rooms" }))
+router.get('/', roomController.getAllRooms)
 
 // get a room
 router.get('/:id', (__, res) => res.json({ msg: "get a room" }))
+
+// create a new room
+router.post('/', roomController.create, roomController.autoRoomToHome)
 
 // update information of a room
 router.put('/:id', (__, res) => res.json({ msg: "update information of a room" }))
@@ -25,7 +26,7 @@ router.patch('/active/:id', (__, res) => res.json({ msg: "active grantable of an
 router.delete('/:id', (__, res) => res.json({ msg: "remove a room" }))
 
 // remove all rooms
-router.delete('/', (__, res) => res.json({ msg: "remove all rooms" }))
+router.delete('/', roomController.deleteAllRooms)
 
 // get all sensors of a room
 router.get('/:id/sensors', (__, res) => res.json({ msg: "get all sensors of rooms" }))

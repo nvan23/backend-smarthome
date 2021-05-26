@@ -14,7 +14,6 @@ const homeSchema = mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
     lowercase: true,
   },
   isBlock: {

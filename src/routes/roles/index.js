@@ -1,7 +1,7 @@
 const express = require('express')
 const rolesController = require('../../controllers/roles')
-const authentication = require('../../middleware/authentication')
-const authorization = require('../../middleware/authorization')
+const requireAuthentication = require('../../middleware/requireAuthentication')
+const requireAuthorization = require('../../middleware/requireAuthorization')
 
 const router = express.Router()
 

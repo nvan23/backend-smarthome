@@ -36,6 +36,13 @@ exports.deleteAllRoles = async (req, res) => {
     .catch(error => res.status(400).json(error))
 }
 
+exports.delete = async (req, res) => {
+  Role
+    .findByIdAndRemove(req.params.id)
+    .then(() => res.status(200).json({ message: "Removing role successfully" }))
+    .catch(() => res.status(400).json({ error: "Cannot found" }))
+}
+
 exports.update = async (req, res) => {
   try {
     const role = await Role.findById(req.params.id)
@@ -53,9 +60,3 @@ exports.update = async (req, res) => {
   }
 }
 
-exports.delete = async (req, res) => {
-  Role
-    .findByIdAndRemove(req.params.id)
-    .then(() => res.status(200).json({ message: "Removing role successfully" }))
-    .catch(() => res.status(400).json({ error: "Cannot found" }))
-}
