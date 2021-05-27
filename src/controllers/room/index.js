@@ -14,6 +14,18 @@ exports.getAllRooms = async (req, res) => {
     .catch(error => res.status(400).json(error))
 }
 
+exports.getRoom = async (req, res) => {
+  try {
+    if (!checker.isObjectId(req.params.id)) throw { error: "Invalid input" }
+    Room
+      .findById(req.params.id)
+      .then(data => res.status(200).json(data))
+      .catch(error => res.status(400).json(error))
+  } catch (error) {
+    res.status(400).json(error)
+  }
+}
+
 exports.create = async (req, res, next) => {
   try {
     if (!req.body?.name?.trim()) throw { error: "Input error" }
@@ -66,9 +78,60 @@ exports.autoRoomToHome = async (req, res) => {
   }
 }
 
+exports.block = (status) => {
+  return async function (req, res) {
+    try {
+      if (!checker.isObjectId(req.params.id))
+        throw { error: "Invalid input" }
+
+      Room
+        .findByIdAndUpdate(
+          req.params.id,
+          { isBlock: status },
+          { new: true }
+        )
+        .then(data => res.status(200).json(data))
+        .catch(error => res.status(400).json(error))
+    } catch (error) {
+      return res.status(400).json(error)
+    }
+  }
+}
+
+
 exports.deleteAllRooms = async (req, res) => {
   await Room.deleteMany()
     .then(data => res.status(200).json(data))
     .catch(error => res.status(400).json(error))
+
   await Home.updateMany({}, { rooms: [] })
+}
+
+exports.delete = async (req, res) => {
+  try {
+    if (!checker.isObjectId(req.params.id)) throw { error: "Invalid input" }
+
+    const user = User.findById(req.user.id)
+    if (!user) throw { error: "User not found" }
+    if (!user.homeId) throw { error: "Your home not existed" }
+
+    const room = Room.findById(req.params.id)
+    if (!room) throw { error: "Room not found" }
+
+    if (user.homeId !== room.homeId) throw { error: "Rom not existed in this home" }
+
+    await Room.findByIdAndRemove(req.params.id)
+      .then(data => res.status(200).json(data))
+      .catch(error => res.status(400).json(error))
+
+    await Home
+      .findByIdAndUpdate(
+        req.user.homeId,
+        {
+          $pull: { rooms: req.params.id }
+        }
+      )
+  } catch (error) {
+    res.status(400).json(error)
+  }
 }

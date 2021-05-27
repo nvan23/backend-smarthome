@@ -8,7 +8,7 @@ const router = express.Router()
 router.get('/', roomController.getAllRooms)
 
 // get a room
-router.get('/:id', (__, res) => res.json({ msg: "get a room" }))
+router.get('/:id', roomController.getRoom)
 
 // create a new room
 router.post('/', roomController.create, roomController.autoRoomToHome)
@@ -17,10 +17,10 @@ router.post('/', roomController.create, roomController.autoRoomToHome)
 router.put('/:id', (__, res) => res.json({ msg: "update information of a room" }))
 
 // block grantable of any room in home
-router.patch('/block/:id', (__, res) => res.json({ msg: "block grantable of any room in home" }))
+router.patch('/block/:id', roomController.block(true))
 
 // active grantable of any room in home
-router.patch('/active/:id', (__, res) => res.json({ msg: "active grantable of any room in home" }))
+router.patch('/active/:id', roomController.block(false))
 
 // remove a room
 router.delete('/:id', (__, res) => res.json({ msg: "remove a room" }))
