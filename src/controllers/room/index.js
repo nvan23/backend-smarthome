@@ -14,7 +14,7 @@ exports.getAllRooms = async (req, res) => {
     .catch(error => res.status(400).json(error))
 }
 
-exports.create = async (req, res) => {
+exports.create = async (req, res, next) => {
   try {
     if (!req.body?.name?.trim()) throw { error: "Input error" }
 
@@ -25,21 +25,12 @@ exports.create = async (req, res) => {
     const home = await Home.findById(user.homeId)
     if (!home) throw { error: "Cannot found home" }
 
-    const rooms = await Room.findOne({ homeId: user.homeId })
+    const rooms = await Room.find({ homeId: user.homeId })
 
-    if (rooms !== null && !rooms?.length) {
-      rooms.forEach(r => {
-        if (r.name === req.body?.name?.trim().toString()) {
-          throw { error: "Room already exists" }
-        }
-      })
-    }
-
-    console.log('here')
+    const isExistedRoom = rooms.some(r => r.name === req.body?.name?.trim().toString())
+    if (isExistedRoom) throw { error: "Room name already exists" }
 
     req.body.homeId = home._id
-
-    console.log(req.body)
 
     const room = new Room(req.body)
     if (!room) throw { error: "Cannot create a new room at your home" }
@@ -69,22 +60,15 @@ exports.autoRoomToHome = async (req, res) => {
 
     if (!home) throw { error: "Cannot found home" }
 
-    return res.status(200).json(room, home)
+    return res.status(200).json(room)
   } catch (error) {
     res.status(400).json(error)
   }
 }
 
 exports.deleteAllRooms = async (req, res) => {
-  Room
-    .deleteMany()
+  await Room.deleteMany()
     .then(data => res.status(200).json(data))
     .catch(error => res.status(400).json(error))
-
-  await Home
-    .findOneAndUpdate(
-      {},
-      { room: [] },
-      { new: true }
-    )
+  await Home.updateMany({}, { rooms: [] })
 }
