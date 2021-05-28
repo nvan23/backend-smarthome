@@ -20,11 +20,8 @@ exports.update = async (req, res) => {
   try {
     if (!req.body.name || !req.body.name.trim()) throw { error: "Invalid input" }
 
-    const user = await User.findById(req.user.id)
-    if (!user) throw { error: "Cannot found user" }
-
     const home = await Home.findByIdAndUpdate(
-      user.homeId,
+      req.home.id,
       { name: req.body.name },
       { new: true }
     )

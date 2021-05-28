@@ -7,20 +7,24 @@ const User = require("../../models/user.model")
 const checker = require('../../utils/checker')
 
 exports.getAllRooms = async (req, res) => {
-  Room
-    .find()
-    .sort({ createdAt: 'desc' })
-    .then(data => res.status(200).json(data))
-    .catch(error => res.status(400).json(error))
+  try {
+    Room
+      .find({ homeId: req.home.id })
+      .sort({ createdAt: 'desc' })
+      .then(data => res.status(200).json(data))
+      .catch(error => res.status(400).json(error))
+  } catch (error) {
+    res.status(400).json(error)
+  }
 }
 
 exports.getRoom = async (req, res) => {
   try {
     if (!checker.isObjectId(req.params.id)) throw { error: "Invalid input" }
-    Room
-      .findById(req.params.id)
-      .then(data => res.status(200).json(data))
-      .catch(error => res.status(400).json(error))
+    const room = Room.findById(req.params.id)
+    if (!room) throw { error: "Room not found" }
+
+    res.status(200).json(data)
   } catch (error) {
     res.status(400).json(error)
   }
@@ -84,27 +88,31 @@ exports.block = (status) => {
       if (!checker.isObjectId(req.params.id))
         throw { error: "Invalid input" }
 
-      Room
-        .findByIdAndUpdate(
-          req.params.id,
-          { isBlock: status },
-          { new: true }
-        )
-        .then(data => res.status(200).json(data))
-        .catch(error => res.status(400).json(error))
+      const room = await Room.findByIdAndUpdate(
+        req.params.id,
+        { isBlock: status },
+        { new: true }
+      )
+
+      if (!room) throw { error: "Cannot block this room" }
+
+      res.status(200).json(room)
     } catch (error) {
       return res.status(400).json(error)
     }
   }
 }
 
-
 exports.deleteAllRooms = async (req, res) => {
-  await Room.deleteMany()
-    .then(data => res.status(200).json(data))
-    .catch(error => res.status(400).json(error))
+  try {
+    await Room.deleteMany({ homeId: req.home.id })
+      .then(data => res.status(200).json(data))
+      .catch(error => res.status(400).json(error))
 
-  await Home.updateMany({}, { rooms: [] })
+    await Home.updateMany({}, { rooms: [] })
+  } catch (error) {
+    res.status(400).json(error)
+  }
 }
 
 exports.delete = async (req, res) => {

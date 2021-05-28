@@ -9,7 +9,7 @@ const requireAuthentication = require('../../middleware/requireAuthentication')
 const requireAuthorization = require('../../middleware/requireAuthorization')
 
 // mount rooms paths
-router.use('/:id/rooms', roomsRouter)
+router.use('/rooms', roomsRouter)
 
 // mount sensors paths
 router.use('/:id/sensors', sensorsRouter)
