@@ -11,7 +11,10 @@ const requireAuthentication = (req, res, next) => {
       try {
         if (err) throw { error: 'Token expired' }
 
-        const user = await User.findOne({ _id: decoded.id, "tokens.token": tokenFromHeader }).select('id')
+        const user = await User
+          .findOne({ _id: decoded.id, "tokens.token": tokenFromHeader })
+          .select('id')
+
         if (!user) throw { error: 'Not authenticated to access this resource' }
 
         req.user = user

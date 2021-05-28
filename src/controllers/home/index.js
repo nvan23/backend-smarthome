@@ -18,13 +18,16 @@ exports.getHome = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    if (!req.body.name || !req.body.name.trim()) throw { error: "Invalid input" }
+    if (!req.body.name || !req.body.name.trim())
+      throw { error: "Invalid input" }
 
-    const home = await Home.findByIdAndUpdate(
-      req.home.id,
-      { name: req.body.name },
-      { new: true }
-    )
+    const home = await Home.findById(req.home.id)
+
+    if (req.body.name === home.name)
+      throw { error: "Home name already exists" }
+
+    home.name = req.body.name
+    home.save()
 
     if (!home) throw { error: "Cannot update your home at now" }
 

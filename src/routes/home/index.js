@@ -1,12 +1,10 @@
 const express = require('express')
-const roomsRouter = require('./rooms.route')
+const roomsRouter = require('./rooms')
 const sensorsRouter = require('./sensors.route')
 const membersRouter = require('./members.route')
 const router = express.Router()
 
 const homeController = require('../../controllers/home')
-const requireAuthentication = require('../../middleware/requireAuthentication')
-const requireAuthorization = require('../../middleware/requireAuthorization')
 
 // mount rooms paths
 router.use('/rooms', roomsRouter)

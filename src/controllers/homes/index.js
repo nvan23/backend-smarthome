@@ -97,6 +97,12 @@ exports.deleteAllHomes = async (req, res) => {
     .deleteMany()
     .then(data => res.status(200).json(data))
     .catch(error => res.status(400).json(error))
+  await User
+    .updateMany(
+      {},
+      { homeId: null },
+      { new: true }
+    )
 }
 
 exports.delete = async (req, res) => {

@@ -1,10 +1,10 @@
 'use strict'
 
-const Home = require("../../models/home.model")
-const Room = require("../../models/room.model")
-const User = require("../../models/user.model")
+const Home = require("../../../models/home.model")
+const Room = require("../../../models/room.model")
+const User = require("../../../models/user.model")
 
-const checker = require('../../utils/checker')
+const checker = require('../../../utils/checker')
 
 exports.getAllRooms = async (req, res) => {
   try {
