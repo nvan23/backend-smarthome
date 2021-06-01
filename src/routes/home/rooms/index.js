@@ -5,6 +5,8 @@ const membersRouter = require('../rooms/members')
 
 const roomController = require('../../../controllers/room')
 
+const mockRoomId = require('../../../utils/mockRoomId')
+
 const router = express.Router()
 
 // get all rooms
@@ -35,6 +37,6 @@ router.delete('/', roomController.deleteAllRooms)
 router.use('/:id/sensors', sensorsRouter)
 
 // mount sensors in room paths
-router.use('/:id/members', membersRouter)
+router.use('/:id/members', mockRoomId(), membersRouter)
 
 module.exports = router

@@ -1,7 +1,7 @@
 const express = require('express')
 const roomsRouter = require('./rooms')
-const sensorsRouter = require('./sensors.route')
-const membersRouter = require('./members.route')
+const sensorsRouter = require('./sensors')
+const membersRouter = require('./members')
 const router = express.Router()
 
 const homeController = require('../../controllers/home')
@@ -10,10 +10,10 @@ const homeController = require('../../controllers/home')
 router.use('/rooms', roomsRouter)
 
 // mount sensors paths
-router.use('/:id/sensors', sensorsRouter)
+router.use('/sensors', sensorsRouter)
 
 // mount members paths
-router.use('/:id/members', membersRouter)
+router.use('/members', membersRouter)
 
 // get home information
 router.get('/', homeController.getHome)

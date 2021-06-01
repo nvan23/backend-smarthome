@@ -6,55 +6,36 @@ const User = require("../../../models/user.model")
 
 const checker = require('../../../utils/checker')
 
-exports.getAllRooms = async (req, res) => {
+exports.getAllMembers = async (req, res) => {
   try {
     Room
-      .find({ homeId: req.home.id })
-      .sort({ createdAt: 'desc' })
-      .then(data => res.status(200).json(data))
+      .findById(req.room.id)
+      .then(data => res.status(200).json(data.members))
       .catch(error => res.status(400).json(error))
   } catch (error) {
     res.status(400).json(error)
   }
 }
 
-exports.getRoom = async (req, res) => {
+exports.create = async (req, res) => {
   try {
-    if (!checker.isObjectId(req.params.id)) throw { error: "Invalid input" }
+    if (!req.body.userId || !checker.isObjectId(req.body.userId))
+      throw { error: "Invalid input" }
 
-    const room = await Room.findById(req.params.id)
-    if (!room) throw { error: "Room not found" }
+    const existedUser = await User.findById(req.body.userId)
+    if (!existedUser) throw { error: "User not found" }
 
-    res.status(200).json(room)
-  } catch (error) {
-    res.status(400).json(error)
-  }
-}
+    const addMember = await Room
+      .findByIdAndUpdate(
+        req.room.id,
+        { $push: { members: existedUser.id } },
+        { new: true }
+      )
 
-exports.create = async (req, res, next) => {
-  try {
-    if (!req.body?.name?.trim()) throw { error: "Input error" }
+    if (!addMember) throw { error: "Cannot add member at now" }
 
-    const user = await User.findById(req.user.id)
-    if (!user) throw { error: "Cannot found user" }
-    if (!user.homeId) throw { error: "Cannot found your house" }
+    res.status(200).json(addMember)
 
-    const home = await Home.findById(user.homeId)
-    if (!home) throw { error: "Cannot found home" }
-
-    const rooms = await Room.find({ homeId: user.homeId })
-
-    const isExistedRoom = rooms.some(r => r.name === req.body?.name?.trim().toString())
-    if (isExistedRoom) throw { error: "Room name already exists" }
-
-    req.body.homeId = home._id
-
-    const room = new Room(req.body)
-    if (!room) throw { error: "Cannot create a new room at your home" }
-
-    await room.save()
-
-    return next()
   } catch (error) {
     res.status(400).json(error)
   }

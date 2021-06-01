@@ -8,36 +8,49 @@ const checker = require('../../utils/checker')
 
 exports.getAllMembers = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id)
-    if (!user) throw { error: "Cannot found user" }
+    const home = await Home
+      .findById(req.home.id)
+      .populate({
+        path: 'rooms',
+        populate: {
+          path: 'members'
+        }
+      })
 
-    const home = await Home.findById(user.homeId)
-    if (!home) throw { error: "Cannot found your home" }
 
-    console.log(home.rooms)
+    const getMembersPromise = home?.rooms.forEach(async r => {
+      let membersContainer = []
+      const membersOfRoom = await Room.findById(r)
 
-    res.status(200).json("hehe")
+      if (membersOfRoom)
+        membersContainer = [...membersContainer, ...membersOfRoom?.members]
+
+      return membersContainer
+    })
+
+    const getMembersPromiseAll = await Promise.all(getMembersPromise)
+
+    console.log('getMembersPromiseAll', getMembersPromiseAll)
+
+    const members = [...new Set(getMembersPromiseAll)]
+    res.status(200).json(members)
   } catch (error) {
     res.status(400).json(error)
   }
 }
 
-exports.update = async (req, res) => {
+exports.getMember = async (req, res) => {
   try {
-    if (!req.body.name || !req.body.name.trim()) throw { error: "Invalid input" }
+    if (!checker.isObjectId(req.params.id))
+      throw { error: "Invalid input" }
 
-    const user = await User.findById(req.user.id)
-    if (!user) throw { error: "Cannot found user" }
+    const member = await User
+      .findById(req.params.id)
+      .select('isBlock name username email')
 
-    const home = await Home.findByIdAndUpdate(
-      user.homeId,
-      { name: req.body.name },
-      { new: true }
-    )
+    if (!member) throw { error: "Member not found" }
 
-    if (!home) throw { error: "Cannot update your home at now" }
-
-    res.status(200).json(home)
+    res.status(200).json(member)
   } catch (error) {
     res.status(400).json(error)
   }

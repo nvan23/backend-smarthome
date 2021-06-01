@@ -5,10 +5,10 @@ const memberController = require('../../../../controllers/room/member')
 const router = express.Router()
 
 // get all members of a room
-router.get('/', (__, res) => res.json({ msg: "get all members of rooms" }))
+router.get('/', memberController.getAllMembers)
 
 // add an member to room
-router.put('/', (__, res) => res.json({ msg: "add member to room" }))
+router.put('/', memberController.create)
 
 // remove an member from room
 router.delete('/:id', (__, res) => res.json({ msg: "remove an member from room" }))

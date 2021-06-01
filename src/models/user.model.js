@@ -74,7 +74,8 @@ const userSchema = mongoose.Schema({
   },
   homes: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Home'
+    ref: 'Home',
+    isBlock: Boolean
   }],
   rooms: [{
     type: mongoose.Schema.Types.ObjectId,

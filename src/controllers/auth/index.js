@@ -1,21 +1,21 @@
 'use strict'
 
-const User = require("../../models/user.model")
+const User = require("../../models/user.model");
 
 exports.refreshToken = async (req, res) => {
   try {
     const refreshTokenFromBody = req.body.refreshToken
-    if (!refreshTokenFromBody) throw { error: 'Cannot found refresh token' }
+    if (!req.body || !refreshTokenFromBody)
+      throw { error: 'Cannot found refresh token' }
 
-    const user = await User.findById(req.user.id)
-    if (!user) throw { error: 'Cannot found user' }
+    const user = await User.findById(req.userId)
 
     if (refreshTokenFromBody !== user.refreshToken)
       throw { error: 'Invalid token refresh' }
 
     const indexOfToken = user.tokens.indexOf(req?.headers['x-access-token'])
 
-    user.tokens.splice(indexOfToken, 1)
+    if (indexOfToken) user.tokens.splice(indexOfToken, 1)
 
     await user.save()
 

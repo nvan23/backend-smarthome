@@ -4,7 +4,7 @@ const User = require('../models/user.model')
 
 const requireAuthentication = (req, res, next) => {
   try {
-    const tokenFromHeader = req?.headers['x-access-token'];
+    const tokenFromHeader = req?.headers['x-access-token']
     if (!tokenFromHeader) throw { error: 'No token provided' }
 
     jwt.verify(tokenFromHeader, config.secret, async (err, decoded) => {

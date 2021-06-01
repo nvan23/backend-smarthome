@@ -1,6 +1,5 @@
 const express = require('express')
-const homeController = require('../../controllers/home')
-const memberController = require('../../controllers/member')
+const memberController = require('../../../controllers/member')
 
 const router = express.Router()
 
@@ -8,13 +7,16 @@ const router = express.Router()
 router.get('/', memberController.getAllMembers)
 
 // get a member of the home
-router.get('/:id', (__, res) => res.json({ msg: "get a member of the home" }))
+router.get('/:id', memberController.getMember)
 
 // block grantable of all members
 router.patch('/block', (__, res) => res.json({ msg: "block grantable of all members at home" }))
 
 // block grantable of a member
 router.patch('/block/:id', (__, res) => res.json({ msg: "block grantable of a member at home" }))
+
+// active grantable of all members
+router.patch('/active', (__, res) => res.json({ msg: "active grantable of all members" }))
 
 // active grantable of a member
 router.patch('/active/:id', (__, res) => res.json({ msg: "active grantable of a member" }))

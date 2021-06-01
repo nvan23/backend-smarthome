@@ -7,6 +7,8 @@ const config = require('../config')
 const requireAuthentication = require('../middleware/requireAuthentication')
 const requireAuthorization = require('../middleware/requireAuthorization')
 
+const mockUserId = require('../utils/mockUserId')
+
 const router = express.Router()
 const authRouter = require('./auth')
 const userRouter = require('./user')
@@ -18,7 +20,7 @@ const trashRouter = require('./trash.route')
 
 router.use(
   '/auth',
-  requireAuthentication,
+  mockUserId(),
   authRouter
 ) // mount auth paths
 

@@ -11,7 +11,6 @@ const requireAuthorization = (role) => {
 
       if (!user.roles.length) throw { error: "Account was banned" }
 
-
       const expectedRoleId = await Role.findOne({ key: role }).select('_id')
 
       const roleScanner = user.roles.includes(expectedRoleId?._id.toString())
