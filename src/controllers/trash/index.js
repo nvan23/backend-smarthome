@@ -1,6 +1,6 @@
 'use strict'
 
-const Equipment = require('../models/equipment.model')
+const Equipment = require('../../models/equipment.model')
 
 exports.getAllDeletedEquipments = (req, res) => {
   Equipment
