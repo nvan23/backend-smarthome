@@ -8,32 +8,25 @@ const checker = require('../../utils/checker')
 
 exports.getAllMembers = async (req, res) => {
   try {
-    const home = await Home
-      .findById(req.home.id)
+    Room
+      .find({ homeId: req.home.id })
       .populate({
-        path: 'rooms',
-        populate: {
-          path: 'members'
-        }
+        path: 'members',
+        select: 'id name username email isBlock homes'
       })
+      .sort({ createdAt: 'desc' })
+      .then(data => {
+        let membersContainer = []
 
+        data.forEach(room => {
+          membersContainer = [...membersContainer, ...room?.members]
+          return membersContainer
+        })
 
-    const getMembersPromise = home?.rooms.forEach(async r => {
-      let membersContainer = []
-      const membersOfRoom = await Room.findById(r)
-
-      if (membersOfRoom)
-        membersContainer = [...membersContainer, ...membersOfRoom?.members]
-
-      return membersContainer
-    })
-
-    const getMembersPromiseAll = await Promise.all(getMembersPromise)
-
-    console.log('getMembersPromiseAll', getMembersPromiseAll)
-
-    const members = [...new Set(getMembersPromiseAll)]
-    res.status(200).json(members)
+        const members = [...new Set(membersContainer)]
+        res.status(200).json(members)
+      })
+      .catch(error => res.status(400).json(error))
   } catch (error) {
     res.status(400).json(error)
   }

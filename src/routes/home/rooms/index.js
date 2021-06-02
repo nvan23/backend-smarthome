@@ -16,7 +16,7 @@ router.get('/', roomController.getAllRooms)
 router.get('/:id', roomController.getRoom)
 
 // create a new room
-router.post('/', roomController.create, roomController.autoRoomToHome)
+router.post('/', roomController.create)
 
 // update information of a room
 router.put('/:id', roomController.update)

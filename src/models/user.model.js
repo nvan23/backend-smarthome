@@ -72,14 +72,15 @@ const userSchema = mongoose.Schema({
     ref: 'Home',
     default: null,
   },
-  homes: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Home',
-    isBlock: Boolean
-  }],
   rooms: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Room'
+    roomId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Room'
+    },
+    isBlock: {
+      type: Boolean,
+      default: false
+    }
   }]
 }, { timestamps: true })
 

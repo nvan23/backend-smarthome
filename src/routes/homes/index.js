@@ -4,7 +4,7 @@ const homesController = require('../../controllers/homes')
 const router = express.Router()
 
 // create an new home from admin
-router.post('/', homesController.create, homesController.transferHomeToHost)
+router.post('/', homesController.create)
 
 // get an all homes
 router.get('/', homesController.getAllHomes)

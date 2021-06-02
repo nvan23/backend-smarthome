@@ -22,88 +22,44 @@ exports.create = async (req, res) => {
     if (!req.body.userId || !checker.isObjectId(req.body.userId))
       throw { error: "Invalid input" }
 
-    const existedUser = await User.findById(req.body.userId)
-    if (!existedUser) throw { error: "User not found" }
+    const user = await User.findById(req.body.userId)
+    if (!user) throw { error: "User not found" }
+
+    const room = await Room.findById(req.room.id)
+
+    if (room.members.includes(req.body.userId))
+      throw { error: "User already exist at this room" }
 
     const addMember = await Room
       .findByIdAndUpdate(
         req.room.id,
-        { $push: { members: existedUser.id } },
+        { $push: { members: user.id } },
         { new: true }
       )
 
     if (!addMember) throw { error: "Cannot add member at now" }
 
-    res.status(200).json(addMember)
-
-  } catch (error) {
-    res.status(400).json(error)
-  }
-}
-
-exports.autoRoomToHome = async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id)
-    if (!user) throw { error: "Cannot found user" }
-
-    const room = await Room.findOne({ homeId: user.homeId, name: req.body.name })
-    if (!room) throw { error: "Cannot find room" }
-
-    const home = await Home
-      .findByIdAndUpdate(
-        user.homeId,
-        { $push: { rooms: room._id } },
-        { new: true }
-      )
-
-    if (!home) throw { error: "Cannot found home" }
-
-    return res.status(200).json(room)
-  } catch (error) {
-    res.status(400).json(error)
-  }
-}
-
-exports.block = (status) => {
-  return async function (req, res) {
-    try {
-      if (!checker.isObjectId(req.params.id))
-        throw { error: "Invalid input" }
-
-      const room = await Room.findByIdAndUpdate(
-        req.params.id,
-        { isBlock: status },
-        { new: true }
-      )
-
-      if (!room) throw { error: "Cannot block this room" }
-
-      res.status(200).json(room)
-    } catch (error) {
-      return res.status(400).json(error)
+    if (user.homeId !== req.home.id) {
+      const updateCurrentHomeUser = await User
+        .findByIdAndUpdate(
+          req.body.userId,
+          { currentHome: req.home.id }
+        )
+      if (!updateCurrentHomeUser)
+        throw { error: "Cannot update current home at now" }
     }
-  }
-}
 
-exports.update = async (req, res) => {
-  try {
-    if (!checker.isObjectId(req.params.id))
-      throw { error: "Room not found" }
+    if (!user.rooms.includes(req.room.id)) {
+      const updateRoomsUser = await User
+        .findByIdAndUpdate(
+          user.id,
+          { $push: { rooms: req.room.id } },
+          { new: true }
+        )
+      if (!updateRoomsUser) throw { error: "Cannot update rooms of user" }
+    }
 
-    if (!req.body.name || !req.body.name.trim())
-      throw { error: "Invalid input" }
-
-    const room = await Room.findOne({ homeId: req.home.id })
-
-    if (req.body.name.trim() === room.name)
-      throw { error: "Room name already exists" }
-
-    room.name = req.body.name
-    room.save()
-
-    if (!room) throw { error: "Cannot update this room at the home" }
-
-    res.status(200).json(room)
+    res.status(200).json(addMember)
   } catch (error) {
     res.status(400).json(error)
   }
@@ -114,37 +70,49 @@ exports.delete = async (req, res) => {
     if (!checker.isObjectId(req.params.id))
       throw { error: "Invalid input" }
 
-    const room = await Room.findById(req.params.id)
-    if (!room) throw { error: "Room not found" }
-
-    if (room.homeId.toString() !== req.home.id.toString())
-      throw { error: "Rom not existed in this home" }
-
-    const deleteProcess = await Room.findByIdAndDelete(room.id)
-
-    if (!deleteProcess) throw { error: "Cannot delete room at now" }
-    res.status(200).json({ message: `${room.name} was deleted successfully` })
-
-    await Home
+    const user = await User
       .findByIdAndUpdate(
-        req.home.id,
-        {
-          $pull: { rooms: req.params.id }
-        },
+        req.params.id,
+        { $pull: { rooms: req.room.id } },
         { new: true }
       )
+    if (!user) throw { error: "Cannot update rooms of user" }
+
+    if (!user?.rooms) {
+      user.currentHome = null
+      await user.save()
+    }
+
+    const lastRoom = user.rooms[user.rooms.length - 1]
+    const previousRoom = await Room.findById(lastRoom)
+    if (previousRoom) {
+      user.currentHome = previousRoom.homeId
+    }
+
+    const room = await Room
+      .findByIdAndUpdate(
+        req.room.id,
+        { $pull: { members: req.params.id } },
+        { new: true }
+      )
+    if (!room) throw { error: "Cannot remove member at this room" }
+
+    res.status(200).json(room)
   } catch (error) {
     res.status(400).json(error)
   }
 }
 
-exports.deleteAllRooms = async (req, res) => {
+exports.deleteAllMembers = async (req, res) => {
   try {
-    await Room.deleteMany({ homeId: req.home.id })
+    await Room.findByIdAndUpdate(
+      req.room.id,
+      { members: [] },
+      { new: true }
+    )
       .then(data => res.status(200).json(data))
       .catch(error => res.status(400).json(error))
 
-    await Home.updateMany({}, { rooms: [] })
   } catch (error) {
     res.status(400).json(error)
   }

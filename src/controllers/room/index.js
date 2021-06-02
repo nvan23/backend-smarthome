@@ -31,7 +31,7 @@ exports.getRoom = async (req, res) => {
   }
 }
 
-exports.create = async (req, res, next) => {
+exports.create = async (req, res) => {
   try {
     if (!req.body?.name?.trim()) throw { error: "Input error" }
 
@@ -54,7 +54,16 @@ exports.create = async (req, res, next) => {
 
     await room.save()
 
-    return next()
+    const updateHome = await Home
+      .findByIdAndUpdate(
+        user.homeId,
+        { $push: { rooms: room._id } },
+        { new: true }
+      )
+
+    if (!updateHome) throw { error: "Cannot found home" }
+
+    res.status(200).json(room)
   } catch (error) {
     res.status(400).json(error)
   }

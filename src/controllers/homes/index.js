@@ -1,8 +1,10 @@
 'use strict'
 
 const Home = require("../../models/home.model")
+const Role = require("../../models/role.model")
 const User = require("../../models/user.model")
 
+const config = require('../../config')
 const checker = require('../../utils/checker')
 
 exports.getAllHomes = async (req, res) => {
@@ -17,14 +19,15 @@ exports.getHome = async (req, res) => {
   try {
     if (!checker.isObjectId(req.params.id))
       throw { error: "Invalid input" }
-    Home
+
+    const home = await Home
       .findById(req.params.id)
-      .then(data => res.status(200).json(data))
-      .catch(error => res.status(400).json(error))
+    if (!home) throw { error: "Home not found" }
+
+    res.status(200).json(home)
   } catch (error) {
     res.status(400).json(error)
   }
-
 }
 
 exports.create = async (req, res, next) => {
@@ -35,34 +38,37 @@ exports.create = async (req, res, next) => {
       !req.body.hostId ||
       !checker.isObjectId(req.body.hostId)
     )
-      throw { error: "Input error" }
+      throw { error: "Invalid input" }
 
     const user = await User.findById(req.body.hostId)
-    if (!user) throw { error: "Cannot found user" }
+    if (!user) throw { error: "User not found" }
 
-    if (user.homeId)
-      throw { error: "This customer is already the owner of another home." }
+    const homes = await Home.find()
+    if (user.homeId || homes.some(h => h.hostId.toString() === req.body.hostId.toString()))
+      throw { error: "This customer is already the owner of another home" }
 
     const home = new Home(req.body)
     if (!home) throw { error: "Cannot create a new home at now" }
 
     await home.save()
 
-    return next()
-  } catch (error) {
-    res.status(400).json(error)
-  }
-}
+    await User
+      .findByIdAndUpdate(
+        req.body.hostId,
+        {
+          homeId: home._id,
+          currentHome: home._id,
+        },
+        { new: true }
+      )
 
-exports.transferHomeToHost = async (req, res) => {
-  try {
-    const home = await Home.findOne({ hostId: req.user.id })
-    if (!home) throw { error: "Cannot found home" }
+    const hostRole = await Role.findOne({ key: config.roles.host })
+    if (!hostRole) throw { error: "Cannot add host role for user" }
 
     await User
       .findByIdAndUpdate(
-        req.user.id,
-        { homeId: home._id },
+        req.body.hostId,
+        { $push: { roles: hostRole.id } },
         { new: true }
       )
 
@@ -97,10 +103,18 @@ exports.deleteAllHomes = async (req, res) => {
     .deleteMany()
     .then(data => res.status(200).json(data))
     .catch(error => res.status(400).json(error))
+
+  const hostRole = await Role.findOne({ key: config.roles.host })
+  if (!hostRole) throw { error: "Cannot add host role for user" }
+
   await User
     .updateMany(
       {},
-      { homeId: null },
+      {
+        homeId: null,
+        currentHome: null,
+        $pull: { roles: hostRole.id }
+      },
       { new: true }
     )
 }
