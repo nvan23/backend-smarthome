@@ -20,8 +20,14 @@ const roomSchema = mongoose.Schema({
     ref: 'Sensor'
   }],
   members: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    isBlock: {
+      type: Boolean,
+      default: false
+    }
   }],
 }, { timestamps: true })
 

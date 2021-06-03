@@ -21,8 +21,14 @@ const homeSchema = mongoose.Schema({
     default: false,
   },
   rooms: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Room'
+    roomId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Room'
+    },
+    isBlock: {
+      type: Boolean,
+      default: false
+    }
   }],
   sensors: [{
     type: mongoose.Schema.Types.ObjectId,

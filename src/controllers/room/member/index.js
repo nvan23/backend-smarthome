@@ -33,7 +33,7 @@ exports.create = async (req, res) => {
     const addMember = await Room
       .findByIdAndUpdate(
         req.room.id,
-        { $push: { members: user.id } },
+        { $push: { members: { userId: user.id } } },
         { new: true }
       )
 
@@ -53,7 +53,7 @@ exports.create = async (req, res) => {
       const updateRoomsUser = await User
         .findByIdAndUpdate(
           user.id,
-          { $push: { rooms: req.room.id } },
+          { $push: { rooms: { roomId: room.id } } },
           { new: true }
         )
       if (!updateRoomsUser) throw { error: "Cannot update rooms of user" }
@@ -65,6 +65,68 @@ exports.create = async (req, res) => {
   }
 }
 
+exports.block = (status) => {
+  return async function (req, res) {
+    try {
+      if (!checker.isObjectId(req.params.id))
+        throw { error: "Invalid input" }
+
+      const user = await User.findById(req.params.id)
+      if (!user) throw { error: "User not found" }
+
+      user.rooms.forEach(room => {
+        if (room.roomId.toString() === req.room.id.toString())
+          room.isBlock = status
+      })
+
+      await user.save()
+
+      const room = await Room
+        .findByIdAndUpdate(
+          req.room.id,
+          { isBlock: status },
+          { new: true }
+        )
+      if (!room) throw { error: "Room not found" }
+
+      res.status(200).json(room)
+    } catch (error) {
+      return res.status(400).json(error)
+    }
+  }
+}
+
+exports.blockAllMembers = (status) => {
+  return async function (req, res) {
+    try {
+      if (!checker.isObjectId(req.params.id))
+        throw { error: "Invalid input" }
+
+      const user = await User.findById(req.params.id)
+      if (!user) throw { error: "User not found" }
+
+      user.rooms.forEach(room => {
+        if (room.roomId.toString() === req.room.id.toString())
+          room.isBlock = status
+      })
+
+      await user.save()
+
+      const room = await Room
+        .updateMany(
+          req.room.id,
+          { isBlock: status },
+          { new: true }
+        )
+      if (!room) throw { error: "Room not found" }
+
+      res.status(200).json(room)
+    } catch (error) {
+      return res.status(400).json(error)
+    }
+  }
+}
+
 exports.delete = async (req, res) => {
   try {
     if (!checker.isObjectId(req.params.id))
@@ -73,21 +135,10 @@ exports.delete = async (req, res) => {
     const user = await User
       .findByIdAndUpdate(
         req.params.id,
-        { $pull: { rooms: req.room.id } },
+        { $pull: { rooms: { roomId: req.room.id } } },
         { new: true }
       )
     if (!user) throw { error: "Cannot update rooms of user" }
-
-    if (!user?.rooms) {
-      user.currentHome = null
-      await user.save()
-    }
-
-    const lastRoom = user.rooms[user.rooms.length - 1]
-    const previousRoom = await Room.findById(lastRoom)
-    if (previousRoom) {
-      user.currentHome = previousRoom.homeId
-    }
 
     const room = await Room
       .findByIdAndUpdate(
@@ -97,6 +148,20 @@ exports.delete = async (req, res) => {
       )
     if (!room) throw { error: "Cannot remove member at this room" }
 
+    if (!user?.rooms.length) {
+      user.homeId ? user.currentHome = user.homeId : user.currentHome = null
+      await user.save()
+    } else {
+      const activeRoom = user.rooms.filter(r => r.isBlock === true)
+      const lastRoom = activeRoom[activeRoom.length - 1]
+
+      const previousRoom = await Room.findById(lastRoom)
+
+      if (previousRoom) {
+        user.currentHome = previousRoom.homeId
+      }
+    }
+
     res.status(200).json(room)
   } catch (error) {
     res.status(400).json(error)
@@ -105,14 +170,37 @@ exports.delete = async (req, res) => {
 
 exports.deleteAllMembers = async (req, res) => {
   try {
-    await Room.findByIdAndUpdate(
-      req.room.id,
-      { members: [] },
-      { new: true }
-    )
-      .then(data => res.status(200).json(data))
-      .catch(error => res.status(400).json(error))
+    const room = await Room.findById(req.room.id)
+    if (!room) throw { error: "Cannot remove all members of this room" }
 
+    room.members.forEach(async member => {
+      const user = await User
+        .findByIdAndUpdate(
+          member.userId,
+          { $pull: { rooms: { roomId: req.room.id } } },
+          { new: true }
+        )
+      if (!user) throw { error: "Cannot update rooms of user" }
+
+      if (!user?.rooms.length) {
+        user.homeId ? user.currentHome = user.homeId : user.currentHome = null
+        await user.save()
+      } else {
+        const activeRoom = user.rooms.filter(r => r.isBlock === true)
+        const lastRoom = activeRoom[activeRoom.length - 1]
+
+        const previousRoom = await Room.findById(lastRoom)
+
+        if (previousRoom) {
+          user.currentHome = previousRoom.homeId
+        }
+      }
+    })
+
+    room.members = []
+    await room.save()
+
+    res.status(200).json(room)
   } catch (error) {
     res.status(400).json(error)
   }

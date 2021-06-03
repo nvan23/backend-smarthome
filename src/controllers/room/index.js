@@ -57,11 +57,11 @@ exports.create = async (req, res) => {
     const updateHome = await Home
       .findByIdAndUpdate(
         user.homeId,
-        { $push: { rooms: room._id } },
+        { $push: { rooms: { roomId: room.id } } },
         { new: true }
       )
 
-    if (!updateHome) throw { error: "Cannot found home" }
+    if (!updateHome) throw { error: "Cannot update rooms of home" }
 
     res.status(200).json(room)
   } catch (error) {

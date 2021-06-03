@@ -12,7 +12,7 @@ exports.getAllMembers = async (req, res) => {
       .find({ homeId: req.home.id })
       .populate({
         path: 'members',
-        select: 'id name username email isBlock homes'
+        select: 'id name username email isBlock'
       })
       .sort({ createdAt: 'desc' })
       .then(data => {
