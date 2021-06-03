@@ -16,7 +16,7 @@ const usersRouter = require('./users')
 const rolesRouter = require('./roles')
 const homeRouter = require('./home')
 const homesRouter = require('./homes')
-const trashRouter = require('./trash.route')
+const trashRouter = require('./trash')
 
 router.use(
   '/auth',

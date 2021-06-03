@@ -1,7 +1,7 @@
 const express = require('express')
 const requireAuthentication = require('../../middleware/requireAuthentication')
 const requireAuthorization = require('../../middleware/requireAuthorization')
-const trashController = require('../controllers/trash.controller')
+const trashController = require('../../controllers/trash')
 
 const router = express.Router()
 
