@@ -81,13 +81,12 @@ exports.block = (status) => {
 
       await user.save()
 
-      const room = await Room
-        .findByIdAndUpdate(
-          req.room.id,
-          { isBlock: status },
-          { new: true }
-        )
-      if (!room) throw { error: "Room not found" }
+      const room = await Room.findById(req.room.id)
+      room.members.forEach(member => {
+        if (member.userId.toString() === user.id.toString())
+          member.isBlock = status
+      })
+      await room.save()
 
       res.status(200).json(room)
     } catch (error) {
@@ -99,26 +98,25 @@ exports.block = (status) => {
 exports.blockAllMembers = (status) => {
   return async function (req, res) {
     try {
-      if (!checker.isObjectId(req.params.id))
-        throw { error: "Invalid input" }
+      const room = await Room.findById(req.room.id)
 
-      const user = await User.findById(req.params.id)
-      if (!user) throw { error: "User not found" }
+      if (!room.members.length)
+        throw { error: "No member in the room" }
 
-      user.rooms.forEach(room => {
-        if (room.roomId.toString() === req.room.id.toString())
-          room.isBlock = status
+      const members = room.members.map(m => m)
+
+      room.members.forEach(member => member.isBlock = status)
+      await room.save()
+
+      members.forEach(async member => {
+        const user = await User.findById(member?.userId)
+        user.rooms.forEach(room => {
+          if (room.roomId.toString() === req.room.id.toString())
+            room.isBlock = status
+        })
+
+        await user.save()
       })
-
-      await user.save()
-
-      const room = await Room
-        .updateMany(
-          req.room.id,
-          { isBlock: status },
-          { new: true }
-        )
-      if (!room) throw { error: "Room not found" }
 
       res.status(200).json(room)
     } catch (error) {
