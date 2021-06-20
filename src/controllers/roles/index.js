@@ -12,7 +12,7 @@ exports.getAllRoles = async (req, res) => {
 
 exports.getRole = async (req, res) => {
   Role
-    .find({ _id: req.params.id })
+    .findById({ _id: req.params.id })
     .then(data => res.status(200).json(data))
     .catch(() => res.status(400).json({ error: "Cannot found" }))
 }

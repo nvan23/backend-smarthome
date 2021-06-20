@@ -1,4 +1,7 @@
 const express = require('express')
+
+const config = require('../../config')
+
 const rolesController = require('../../controllers/roles')
 const requireAuthentication = require('../../middleware/requireAuthentication')
 const requireAuthorization = require('../../middleware/requireAuthorization')
