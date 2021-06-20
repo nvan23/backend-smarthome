@@ -35,7 +35,7 @@ npm run dev
 > After running application, copy file at src\test\postman\smarthome.postman_collection.json and import to Postman
 
 - Using your browser
-  Add [Json viewer](https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh?hl=vi) for your browser
+> Add [Json viewer](https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh?hl=vi) for your browser
   
 ### Note
  - [Swagger](https://swagger.io/) - comming soon

@@ -48,3 +48,33 @@ exports.getMember = async (req, res) => {
     res.status(400).json(error)
   }
 }
+
+exports.blockAllMembers = (status) => {
+  return async function (req, res) {
+    try {
+      const rooms = await Room
+        .find({ homeId: req.home.id })
+
+      if (!rooms.length)
+        throw { error: "No room found" }
+
+      rooms.forEach(room => {
+        room.members.forEach(async member => {
+          member.isBlock = status
+
+          const user = await User.findById(member.userId)
+          user.rooms.forEach(r => {
+            if (r.roomId === room.id)
+              r.isBlock = status
+          })
+        })
+      })
+
+      await rooms.save()
+
+      res.status(200).json(rooms)
+    } catch (error) {
+      return res.status(400).json(error)
+    }
+  }
+}

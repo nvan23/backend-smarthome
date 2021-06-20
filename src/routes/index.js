@@ -36,7 +36,6 @@ router.use(
 router.use(
   '/roles',
   requireAuthentication,
-  requireAuthorization(config.roles.admin),
   rolesRouter
 ) // mount user paths
 

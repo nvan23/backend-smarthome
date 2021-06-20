@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const sensorSchema = mongoose.Schema({
+const deviceSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -32,6 +32,6 @@ const sensorSchema = mongoose.Schema({
   },
 }, { timestamps: true })
 
-const Sensor = mongoose.model('Sensor', sensorSchema)
+const Device = mongoose.model('Device', deviceSchema)
 
-module.exports = Sensor
+module.exports = Device

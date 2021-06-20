@@ -15,9 +15,9 @@ const roomSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  sensors: [{
+  devices: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Sensor'
+    ref: 'Device'
   }],
   members: [{
     userId: {

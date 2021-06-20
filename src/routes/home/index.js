@@ -1,6 +1,6 @@
 const express = require('express')
 const roomsRouter = require('./rooms')
-const sensorsRouter = require('./sensors')
+const devicesRouter = require('./devices')
 const membersRouter = require('./members')
 const router = express.Router()
 
@@ -9,8 +9,8 @@ const homeController = require('../../controllers/home')
 // mount rooms paths
 router.use('/rooms', roomsRouter)
 
-// mount sensors paths
-router.use('/sensors', sensorsRouter)
+// mount devices paths
+router.use('/devices', devicesRouter)
 
 // mount members paths
 router.use('/members', membersRouter)

@@ -30,9 +30,9 @@ const homeSchema = mongoose.Schema({
       default: false
     }
   }],
-  sensors: [{
+  devices: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Sensor'
+    ref: 'Device'
   }]
 }, { timestamps: true })
 

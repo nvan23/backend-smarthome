@@ -6,21 +6,44 @@ const requireAuthorization = require('../../middleware/requireAuthorization')
 const router = express.Router()
 
 // get all roles
-router.get('/', rolesController.getAllRoles)
+router.get(
+  '/',
+  requireAuthorization(config.roles.admin),
+  rolesController.getAllRoles
+)
 
 // get an role
-router.get('/:id', rolesController.getRole)
+router.get(
+  '/:id',
+  rolesController.getRole
+)
 
 // create an role
-router.post('/', rolesController.create)
+router.post(
+  '/',
+  requireAuthorization(config.roles.admin),
+  rolesController.create
+)
 
 // update an role
-router.put('/:id', rolesController.update)
+router.put(
+  '/:id',
+  requireAuthorization(config.roles.admin),
+  rolesController.update
+)
 
 // delete a role
-router.delete('/:id', rolesController.delete)
+router.delete(
+  '/:id',
+  requireAuthorization(config.roles.admin),
+  rolesController.delete
+)
 
 // delete all roles
-router.delete('/', rolesController.deleteAllRoles)
+router.delete(
+  '/',
+  requireAuthorization(config.roles.admin),
+  rolesController.deleteAllRoles
+)
 
 module.exports = router

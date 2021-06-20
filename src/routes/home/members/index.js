@@ -10,15 +10,9 @@ router.get('/', memberController.getAllMembers)
 router.get('/:id', memberController.getMember)
 
 // block grantable of all members of a home
-router.patch('/block', (__, res) => res.json({ msg: "block grantable of all members at home" }))
-
-// block grantable of a member of a home
-router.patch('/block/:id', (__, res) => res.json({ msg: "block grantable of a member at home" }))
+router.patch('/block', memberController.blockAllMembers(true))
 
 // active grantable of all members of a home
-router.patch('/active', (__, res) => res.json({ msg: "active grantable of all members" }))
-
-// active grantable of a member of a home
-router.patch('/active/:id', (__, res) => res.json({ msg: "active grantable of a member" }))
+router.patch('/active', memberController.blockAllMembers(false))
 
 module.exports = router

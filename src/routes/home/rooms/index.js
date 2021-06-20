@@ -1,6 +1,6 @@
 const express = require('express')
 
-const sensorsRouter = require('../rooms/sensors')
+const devicesRouter = require('../rooms/devices')
 const membersRouter = require('../rooms/members')
 
 const roomController = require('../../../controllers/room')
@@ -33,10 +33,10 @@ router.delete('/:id', roomController.delete)
 // remove all rooms
 router.delete('/', roomController.deleteAllRooms)
 
-// mount sensors in room paths
-router.use('/:id/sensors', sensorsRouter)
+// mount devices in room paths
+router.use('/:id/devices', devicesRouter)
 
-// mount sensors in room paths
+// mount members in room paths
 router.use('/:id/members', mockRoomId(), membersRouter)
 
 module.exports = router
