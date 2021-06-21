@@ -1,15 +1,16 @@
 const express = require('express')
-const usersController = require('../../controllers/users')
-const requireAuthentication = require('../../middleware/requireAuthentication')
-const requireAuthorization = require('../../middleware/requireAuthorization')
-
 const router = express.Router()
+
+const usersController = require('../../controllers/users')
 
 // get all users
 router.get('/', usersController.getAllUsers)
 
 // get an user
 router.get('/:id', usersController.getUser)
+
+// create new an user
+router.post('/', usersController.create)
 
 // change role of an user
 router.patch('/:id/role/change', usersController.changeRole)

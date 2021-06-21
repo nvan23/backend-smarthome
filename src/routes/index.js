@@ -15,7 +15,6 @@ const userRouter = require('./user')
 const usersRouter = require('./users')
 const rolesRouter = require('./roles')
 const homeRouter = require('./home')
-const homesRouter = require('./homes')
 const trashRouter = require('./trash')
 
 router.use(
@@ -29,7 +28,7 @@ router.use('/user', userRouter) // mount user paths
 router.use(
   '/users',
   requireAuthentication,
-  requireAuthorization(config.roles.admin),
+  requireAuthorization(config.roles.host),
   usersRouter
 ) // mount user paths
 
@@ -45,13 +44,6 @@ router.use(
   requireAuthorization(config.roles.host),
   homeRouter
 ) // mount home paths
-
-router.use(
-  '/homes',
-  requireAuthentication,
-  requireAuthorization(config.roles.admin),
-  homesRouter
-) // mount homes paths
 
 router.use('/trash', trashRouter) // mount trash paths
 
