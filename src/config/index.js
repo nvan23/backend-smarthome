@@ -13,5 +13,12 @@ module.exports = {
     admin: process.env.ADMIN,
     host: process.env.HOST,
     user: process.env.USER,
+  },
+  default: {
+    host: {
+      name: process.env.HOST_NAME,
+      username: process.env.HOST_USERNAME,
+      password: process.env.HOST_PASSWORD,
+    },
   }
 }
