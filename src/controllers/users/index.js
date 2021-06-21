@@ -30,6 +30,24 @@ exports.getUser = async (req, res) => {
   }
 }
 
+exports.create = async (req, res) => {
+  try {
+    const { username } = req.body
+    const isUser = await User.findOne({ username })
+
+    if (isUser) return res.status(406).json({ message: "User name already exists." })
+
+    const user = new User(req.body)
+    await user.save()
+    await user.initUserRole()
+
+    res.status(200).json({ msg: 'Create an new user successfully.' })
+
+  } catch (error) {
+    res.status(400).json(error.errors)
+  }
+}
+
 exports.changeRole = async (req, res) => {
   try {
     if (!req.body || !req.body.role || !checker.isObjectId(req.body.role))
