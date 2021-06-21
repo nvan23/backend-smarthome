@@ -470,7 +470,7 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60b83f8eded6442fc8f88ca7/members/block/60b0bad58d28123b10b6ca91",
+											"raw": "http://localhost:3000/api/v1/home/rooms/60b8b032f5b25823f891a2da/members/block/60b0bad58d28123b10b6ca91",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -481,7 +481,7 @@
 												"v1",
 												"home",
 												"rooms",
-												"60b83f8eded6442fc8f88ca7",
+												"60b8b032f5b25823f891a2da",
 												"members",
 												"block",
 												"60b0bad58d28123b10b6ca91"
@@ -565,7 +565,7 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60b743f83f8a28006c789c75/members/active",
+											"raw": "http://localhost:3000/api/v1/home/rooms/60b8b032f5b25823f891a2da/members/active",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -576,7 +576,7 @@
 												"v1",
 												"home",
 												"rooms",
-												"60b743f83f8a28006c789c75",
+												"60b8b032f5b25823f891a2da",
 												"members",
 												"active"
 											]
@@ -1253,36 +1253,6 @@
 							"response": []
 						},
 						{
-							"name": "block",
-							"request": {
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "x-access-token",
-										"value": "{{TOKEN}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "http://localhost:3000/api/v1/home/members/block/id",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"v1",
-										"home",
-										"members",
-										"block",
-										"id"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "block-all",
 							"request": {
 								"method": "PATCH",
@@ -1306,36 +1276,6 @@
 										"home",
 										"members",
 										"block"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "active",
-							"request": {
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "x-access-token",
-										"value": "{{TOKEN}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "http://localhost:3000/api/v1/home/members/active/id",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"api",
-										"v1",
-										"home",
-										"members",
-										"active",
-										"id"
 									]
 								}
 							},
@@ -1490,6 +1430,42 @@
 								"v1",
 								"users",
 								"60b0bad58d28123b10b6ca91"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users"
 							]
 						}
 					},
@@ -1985,9 +1961,15 @@
 					"name": "role",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/roles/60aca96e81f7f14f48802c94",
+							"raw": "http://localhost:3000/api/v1/roles/60af4dc15b7a290f7c07bc1e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1997,7 +1979,7 @@
 								"api",
 								"v1",
 								"roles",
-								"60aca96e81f7f14f48802c94"
+								"60af4dc15b7a290f7c07bc1e"
 							]
 						}
 					},
