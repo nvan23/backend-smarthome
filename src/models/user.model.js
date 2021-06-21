@@ -128,6 +128,16 @@ userSchema.methods.initUserRole = async function () {
   await user.save()
 }
 
+userSchema.methods.initHostRole = async function () {
+  // Generate an auth token for the user
+  const user = this
+  const role = await Role.findOne({ key: config.roles.host })
+  if (role) {
+    user.roles = user.roles.concat(role._id)
+  }
+  await user.save()
+}
+
 const User = mongoose.model('User', userSchema)
 
 module.exports = User
