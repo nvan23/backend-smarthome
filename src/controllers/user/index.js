@@ -23,13 +23,13 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body
+    const { username, password } = req.body
 
-    const user = await User.findOne({ email })
-    if (!user) throw { error: 'Email and password are incorrect.' }
+    const user = await User.findOne({ username })
+    if (!user) throw { error: 'User name and password are incorrect.' }
 
     const isPasswordMatch = await bcrypt.compare(password, user.password)
-    if (!isPasswordMatch) throw { error: 'Email and password are incorrect.' }
+    if (!isPasswordMatch) throw { error: 'User name and password are incorrect.' }
 
     if (user.isBlock || !user.roles.length) throw { error: "Your account was banned" }
 
