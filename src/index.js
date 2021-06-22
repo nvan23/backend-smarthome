@@ -8,5 +8,5 @@ const initializer = require('./services/initializer')
 app.start()
 mongoose.connect()
 initializer.roles()
-
+initializer.host()
 module.exports = app
