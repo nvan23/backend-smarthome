@@ -20,47 +20,36 @@ exports.roles = async () => {
 exports.host = async () => {
   try {
     const users = await User.find()
-    if (users?.length) throw { error: "Error during init default host account." }
+    if (users?.length) return
 
     const user = new User(config?.default?.host)
     await user.save()
     await user.initHostRole()
 
-    console.log({ msg: 'Init default host account successfully' })
-
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-exports.home = async () => {
-  try {
-    const users = await User.find()
-    if (users?.length !== 1) throw { error: "Error during create default home." }
-
     const homes = await Home.find()
-    if (homes?.length !== 1) throw { error: "Error during create default home." }
+    if (homes?.length === 0) {
+      const home = new Home({
+        name: `${user?.name}'s home`,
+        hostId: user?.id,
+      })
 
-    const home = new Home({
-      name: `${users[0]?.name}'s home`,
-      hostId: users[0]?.id,
-    })
+      if (!home) throw { error: "Cannot create a first home" }
+      await home.save()
 
-    if (!home) throw { error: "Cannot create a first home" }
-    await home.save()
+      await User
+        .findByIdAndUpdate(
+          user?.id,
+          {
+            homeId: home._id,
+            currentHome: home._id,
+          },
+          { new: true }
+        )
 
-    await User
-      .findByIdAndUpdate(
-        users[0]?.id,
-        {
-          homeId: home._id,
-          currentHome: home._id,
-        },
-        { new: true }
-      )
-
-    console.log("Creating default home successfully")
-
+      console.log("Creating default home successfully")
+      return
+    }
+    console.log('Error during create default home')
   } catch (error) {
     console.log(error)
   }
