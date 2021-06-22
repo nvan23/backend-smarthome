@@ -89,7 +89,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"van@nomail.com\",\r\n    \"password\": \"V@n12345\"\r\n}",
+							"raw": "{\r\n    \"username\": \"host\",\r\n    \"password\": \"Truong@123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1969,7 +1969,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/roles/60af4dc15b7a290f7c07bc1e",
+							"raw": "http://localhost:3000/api/v1/roles/60d13bf5edf28f08acad31f7",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1979,7 +1979,7 @@
 								"api",
 								"v1",
 								"roles",
-								"60af4dc15b7a290f7c07bc1e"
+								"60d13bf5edf28f08acad31f7"
 							]
 						}
 					},
