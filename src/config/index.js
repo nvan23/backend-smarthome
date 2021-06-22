@@ -19,6 +19,7 @@ module.exports = {
       name: process.env.HOST_NAME,
       username: process.env.HOST_USERNAME,
       password: process.env.HOST_PASSWORD,
+      email: process.env.HOST_MAIL,
     },
   }
 }
