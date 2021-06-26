@@ -34,7 +34,7 @@ router.delete('/:id', roomController.delete)
 router.delete('/', roomController.deleteAllRooms)
 
 // mount devices in room paths
-router.use('/:id/devices', devicesRouter)
+router.use('/:id/devices', mockRoomId(), devicesRouter)
 
 // mount members in room paths
 router.use('/:id/members', mockRoomId(), membersRouter)
