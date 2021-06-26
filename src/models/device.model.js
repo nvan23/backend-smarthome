@@ -6,6 +6,16 @@ const deviceSchema = mongoose.Schema({
     required: true,
     trim: true
   },
+  publisher: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  subscriber: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   homeId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Home',
@@ -14,13 +24,11 @@ const deviceSchema = mongoose.Schema({
   roomId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
     default: null
   },
   description: {
     type: String,
-    required: true,
-    lowercase: true,
+    max: 500,
   },
   isBlock: {
     type: Boolean,

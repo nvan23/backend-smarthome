@@ -3,12 +3,13 @@
 const Home = require("../../../models/home.model")
 const Room = require("../../../models/room.model")
 const User = require("../../../models/user.model")
+const Device = require("../../../models/device.model")
 
 const checker = require('../../../utils/checker')
 
-exports.getAllRooms = async (req, res) => {
+exports.getAllDevices = async (req, res) => {
   try {
-    Room
+    Device
       .find({ homeId: req.home.id })
       .sort({ createdAt: 'desc' })
       .then(data => res.status(200).json(data))
@@ -42,7 +43,7 @@ exports.create = async (req, res, next) => {
     const home = await Home.findById(user.homeId)
     if (!home) throw { error: "Cannot found home" }
 
-    const rooms = await Room.find({ homeId: user.homeId })
+    const Devices = await Room.find({ homeId: user.homeId })
 
     const isExistedRoom = rooms.some(r => r.name === req.body?.name?.trim().toString())
     if (isExistedRoom) throw { error: "Room name already exists" }
