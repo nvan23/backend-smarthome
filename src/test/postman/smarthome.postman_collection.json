@@ -274,7 +274,7 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/id/devices",
+											"raw": "http://localhost:3000/api/v1/home/rooms/60d6e79018c76410a497d78a/devices",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -285,7 +285,7 @@
 												"v1",
 												"home",
 												"rooms",
-												"id",
+												"60d6e79018c76410a497d78a",
 												"devices"
 											]
 										}
@@ -303,8 +303,17 @@
 												"type": "text"
 											}
 										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"deviceId\": \"60d6ed2c8c3f1c28e4caa74b\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/id/devices",
+											"raw": "http://localhost:3000/api/v1/home/rooms/60d6e79018c76410a497d78a/devices",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -315,7 +324,7 @@
 												"v1",
 												"home",
 												"rooms",
-												"id",
+												"60d6e79018c76410a497d78a",
 												"devices"
 											]
 										}
@@ -334,7 +343,7 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/id/devices/id",
+											"raw": "http://localhost:3000/api/v1/home/rooms/60d6e79018c76410a497d78a/devices/60d6ed2c8c3f1c28e4caa74bs",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -345,9 +354,9 @@
 												"v1",
 												"home",
 												"rooms",
-												"id",
+												"60d6e79018c76410a497d78a",
 												"devices",
-												"id"
+												"60d6ed2c8c3f1c28e4caa74bs"
 											]
 										}
 									},
@@ -365,7 +374,7 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/id/rooms/id/devices",
+											"raw": "http://localhost:3000/api/v1/home/rooms/60d6e79018c76410a497d78a/devices",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -375,9 +384,8 @@
 												"api",
 												"v1",
 												"home",
-												"id",
 												"rooms",
-												"id",
+												"60d6e79018c76410a497d78a",
 												"devices"
 											]
 										}
@@ -687,7 +695,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/rooms/60b8b032f5b25823f891a2da",
+									"raw": "http://localhost:3000/api/v1/home/rooms/60d6e79018c76410a497d78a",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -698,7 +706,7 @@
 										"v1",
 										"home",
 										"rooms",
-										"60b8b032f5b25823f891a2da"
+										"60d6e79018c76410a497d78a"
 									]
 								}
 							},
@@ -762,7 +770,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/rooms/60b06db9498e3426f0365ece",
+									"raw": "http://localhost:3000/api/v1/home/rooms/60d5ff8288811a0c98ea0055",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -773,7 +781,7 @@
 										"v1",
 										"home",
 										"rooms",
-										"60b06db9498e3426f0365ece"
+										"60d5ff8288811a0c98ea0055"
 									]
 								}
 							},
@@ -941,7 +949,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/devices/id",
+									"raw": "http://localhost:3000/api/v1/home/devices/60d6e5ed72cc46239c5d37f8",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -952,7 +960,7 @@
 										"v1",
 										"home",
 										"devices",
-										"id"
+										"60d6e5ed72cc46239c5d37f8"
 									]
 								}
 							},
@@ -969,6 +977,15 @@
 										"type": "text"
 									}
 								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"temperature\",\r\n    \"publisher\": \"/p-temperature\",\r\n    \"subscriber\": \"/s-temperature\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
 									"raw": "http://localhost:3000/api/v1/home/devices",
 									"protocol": "http",
@@ -997,8 +1014,17 @@
 										"type": "text"
 									}
 								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"fire\",\r\n    \"publisher\": \"/p-fire\",\r\n    \"subscriber\": \"/s-fire\",\r\n    \"description\": \"Fire sensor\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/devices/id",
+									"raw": "http://localhost:3000/api/v1/home/devices/60d6dbf64363a60f6080ee38",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1009,7 +1035,7 @@
 										"v1",
 										"home",
 										"devices",
-										"id"
+										"60d6dbf64363a60f6080ee38"
 									]
 								}
 							},
@@ -1027,7 +1053,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/devices/block/id",
+									"raw": "http://localhost:3000/api/v1/home/devices/block/60d6dbf64363a60f6080ee38",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1039,7 +1065,7 @@
 										"home",
 										"devices",
 										"block",
-										"id"
+										"60d6dbf64363a60f6080ee38"
 									]
 								}
 							},
@@ -1086,7 +1112,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/devices/active/id",
+									"raw": "http://localhost:3000/api/v1/home/devices/active/60d6dbf64363a60f6080ee38",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1098,7 +1124,7 @@
 										"home",
 										"devices",
 										"active",
-										"id"
+										"60d6dbf64363a60f6080ee38"
 									]
 								}
 							},
@@ -1145,7 +1171,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/devices/id",
+									"raw": "http://localhost:3000/api/v1/home/devices/60d6e5ed72cc46239c5d37f8",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1156,7 +1182,7 @@
 										"v1",
 										"home",
 										"devices",
-										"id"
+										"60d6e5ed72cc46239c5d37f8"
 									]
 								}
 							},
@@ -1419,7 +1445,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/users/60b0bad58d28123b10b6ca91",
+							"raw": "http://localhost:3000/api/v1/users/60d13e48c7308e2c206c0899",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1429,7 +1455,7 @@
 								"api",
 								"v1",
 								"users",
-								"60b0bad58d28123b10b6ca91"
+								"60d13e48c7308e2c206c0899"
 							]
 						}
 					},
