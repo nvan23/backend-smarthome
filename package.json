@@ -4,7 +4,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "./node_modules/.bin/nodemon src/index.js"
+    "dev": "nodemon src/index.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
