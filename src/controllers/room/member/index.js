@@ -141,7 +141,7 @@ exports.delete = async (req, res) => {
     const room = await Room
       .findByIdAndUpdate(
         req.room.id,
-        { $pull: { members: req.params.id } },
+        { $pull: { members: { userId: req.params.id } } },
         { new: true }
       )
     if (!room) throw { error: "Cannot remove member at this room" }
