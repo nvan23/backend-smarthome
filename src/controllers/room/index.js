@@ -121,7 +121,7 @@ exports.update = async (req, res) => {
     if (!req.body.name || !req.body.name.trim())
       throw { error: "Invalid input" }
 
-    const room = await Room.findOne({ homeId: req.home.id })
+    const room = await Room.findById(req.params.id)
 
     if (req.body.name.trim() === room.name)
       throw { error: "Room name already exists" }
