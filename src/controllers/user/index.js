@@ -1,6 +1,7 @@
 'use strict'
-
+const validator = require('validator')
 const bcrypt = require('bcryptjs')
+
 const User = require("../../models/user.model")
 
 exports.register = async (req, res) => {
@@ -53,6 +54,27 @@ exports.me = (req, res) => {
       res.status(200).json(user)
     })
     .catch(error => res.status(400).json(error))
+}
+
+exports.resetPassword = async (req, res) => {
+  try {
+    const email = req.body?.email?.trim()
+    if (
+      !email &&
+      !validator.isEmail(email)
+    )
+      throw { error: 'Invalid email address' }
+
+    const user = await User.findOne({ email: email })
+    if (!user) throw { error: 'User not found' }
+
+    // send mail using node mailer
+
+    res.status(200).json("Please check your email to reset your password")
+  } catch (error) {
+    res.status(400).json(error)
+  }
+
 }
 
 exports.logout = async (req, res) => {

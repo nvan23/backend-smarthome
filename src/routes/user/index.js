@@ -1,4 +1,5 @@
 const express = require('express')
+const roomsRouter = require('./rooms')
 const userController = require('../../controllers/user')
 const requireAuthentication = require('../../middleware/requireAuthentication')
 
@@ -24,5 +25,8 @@ router.patch('/me/password/reset', (__, res) => res.json({ msg: "Reset password"
 
 // Update profile user
 router.put('/me', requireAuthentication, (__, res) => res.json({ msg: "Update profile user" }))
+
+// Room
+router.use('/me/rooms', requireAuthentication, roomsRouter)
 
 module.exports = router
