@@ -52,13 +52,181 @@
 			"name": "user",
 			"item": [
 				{
+					"name": "rooms",
+					"item": [
+						{
+							"name": "devices",
+							"item": [
+								{
+									"name": "devices",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-access-token",
+												"value": "{{TOKEN}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:3000/api/v1/user/me/rooms/id/devices",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"v1",
+												"user",
+												"me",
+												"rooms",
+												"id",
+												"devices"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "device",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-access-token",
+												"value": "{{TOKEN}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:3000/api/v1/user/me/rooms/60d6e79018c76410a497d78a/devices/60db3b292acba211cc6e9fb9",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"v1",
+												"user",
+												"me",
+												"rooms",
+												"60d6e79018c76410a497d78a",
+												"devices",
+												"60db3b292acba211cc6e9fb9"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "members",
+							"item": [
+								{
+									"name": "members",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-access-token",
+												"value": "{{TOKEN}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:3000/api/v1/user/me/rooms/60d6e79018c76410a497d78a/members",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"v1",
+												"user",
+												"me",
+												"rooms",
+												"60d6e79018c76410a497d78a",
+												"members"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "rooms",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/user/me/rooms",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"me",
+										"rooms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "room",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/user/me/rooms/60db392763f4952704e720ed",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"me",
+										"rooms",
+										"60db392763f4952704e720ed"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "register",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"nam\",\r\n    \"username\": \"hnam\",\r\n    \"email\": \"hnam@nomail.com\",\r\n    \"password\": \"V@m12345\"\r\n}",
+							"raw": "{\r\n    \"name\": \"van\",\r\n    \"username\": \"nvan\",\r\n    \"email\": \"nvan@nomail.com\",\r\n    \"password\": \"V@m12345\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -89,7 +257,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"host\",\r\n    \"password\": \"Truong@123456\"\r\n}",
+							"raw": "{\r\n    \"username\": \"nvan\",\r\n    \"password\": \"V@m12345\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -313,7 +481,7 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60d6e79018c76410a497d78a/devices",
+											"raw": "http://localhost:3000/api/v1/home/rooms/60db392763f4952704e720ed/devices",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -324,7 +492,7 @@
 												"v1",
 												"home",
 												"rooms",
-												"60d6e79018c76410a497d78a",
+												"60db392763f4952704e720ed",
 												"devices"
 											]
 										}
@@ -409,7 +577,7 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60b8b032f5b25823f891a2da/members",
+											"raw": "http://localhost:3000/api/v1/home/rooms/60d6e79018c76410a497d78a/members",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -420,7 +588,7 @@
 												"v1",
 												"home",
 												"rooms",
-												"60b8b032f5b25823f891a2da",
+												"60d6e79018c76410a497d78a",
 												"members"
 											]
 										}
@@ -440,7 +608,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"userId\": \"60b0bad58d28123b10b6ca91\"\r\n}",
+											"raw": "{\r\n    \"userId\": \"60d82bb4b09e121f3c1531a5\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -448,7 +616,7 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60b8b032f5b25823f891a2da/members",
+											"raw": "http://localhost:3000/api/v1/home/rooms/60db392763f4952704e720ed/members",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -459,7 +627,7 @@
 												"v1",
 												"home",
 												"rooms",
-												"60b8b032f5b25823f891a2da",
+												"60db392763f4952704e720ed",
 												"members"
 											]
 										}
@@ -604,7 +772,7 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60b8b032f5b25823f891a2da/members/60b0bad58d28123b10b6ca91",
+											"raw": "http://localhost:3000/api/v1/home/rooms/60d6e79018c76410a497d78a/members/60d82bb4b09e121f3c1531a5",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -615,9 +783,9 @@
 												"v1",
 												"home",
 												"rooms",
-												"60b8b032f5b25823f891a2da",
+												"60d6e79018c76410a497d78a",
 												"members",
-												"60b0bad58d28123b10b6ca91"
+												"60d82bb4b09e121f3c1531a5"
 											]
 										}
 									},
@@ -635,7 +803,7 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60b8b032f5b25823f891a2da/members",
+											"raw": "http://localhost:3000/api/v1/home/rooms/60d6e79018c76410a497d78a/members",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -646,7 +814,7 @@
 												"v1",
 												"home",
 												"rooms",
-												"60b8b032f5b25823f891a2da",
+												"60d6e79018c76410a497d78a",
 												"members"
 											]
 										}
@@ -725,7 +893,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"Van's room\"\r\n}",
+									"raw": "{\r\n    \"name\": \"Nam's room\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -979,7 +1147,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"temperature\",\r\n    \"publisher\": \"/p-temperature\",\r\n    \"subscriber\": \"/s-temperature\"\r\n}",
+									"raw": "{\r\n    \"name\": \"fire\",\r\n    \"publisher\": \"/p-fire\",\r\n    \"subscriber\": \"/s-fire\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1445,7 +1613,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/users/60d13e48c7308e2c206c0899",
+							"raw": "http://localhost:3000/api/v1/users/60d82bb4b09e121f3c1531a5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1455,7 +1623,7 @@
 								"api",
 								"v1",
 								"users",
-								"60d13e48c7308e2c206c0899"
+								"60d82bb4b09e121f3c1531a5"
 							]
 						}
 					},
