@@ -69,7 +69,7 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/user/me/rooms/id/devices",
+											"raw": "http://localhost:3000/api/v1/user/me/rooms/60d6e79018c76410a497d78a/devices",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -81,7 +81,7 @@
 												"user",
 												"me",
 												"rooms",
-												"id",
+												"60d6e79018c76410a497d78a",
 												"devices"
 											]
 										}
@@ -374,12 +374,24 @@
 					"response": []
 				},
 				{
-					"name": "reset-password",
+					"name": "forgot-password",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
-						"method": "PATCH",
+						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"dtnvan230898@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/user/me/password/reset",
+							"raw": "http://localhost:3000/api/v1/user/forgot-password",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -389,9 +401,7 @@
 								"api",
 								"v1",
 								"user",
-								"me",
-								"password",
-								"reset"
+								"forgot-password"
 							]
 						}
 					},
@@ -400,7 +410,7 @@
 				{
 					"name": "update",
 					"request": {
-						"method": "PUT",
+						"method": "PATCH",
 						"header": [],
 						"url": {
 							"raw": "http://localhost:3000/api/v1/user/me",
@@ -414,6 +424,61 @@
 								"v1",
 								"user",
 								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-password",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/user/reset-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVmZjBmODg4MTFhMGM5OGVhMDAzMyIsImlhdCI6MTYyNTQxNjE3NiwiZXhwIjoxNjI1NDE5Nzc2fQ.Pmss28I7ocp0WFEp9658Bl3Bzgm-zO53-yjQaXLWrgY",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"reset-password",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVmZjBmODg4MTFhMGM5OGVhMDAzMyIsImlhdCI6MTYyNTQxNjE3NiwiZXhwIjoxNjI1NDE5Nzc2fQ.Pmss28I7ocp0WFEp9658Bl3Bzgm-zO53-yjQaXLWrgY"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change-password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\": \"Van@12345\",\r\n    \"newPassword\": \"Truong@123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/user/reset-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVmZjBmODg4MTFhMGM5OGVhMDAzMyIsImlhdCI6MTYyNTQxNjE3NiwiZXhwIjoxNjI1NDE5Nzc2fQ.Pmss28I7ocp0WFEp9658Bl3Bzgm-zO53-yjQaXLWrgY",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"reset-password",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVmZjBmODg4MTFhMGM5OGVhMDAzMyIsImlhdCI6MTYyNTQxNjE3NiwiZXhwIjoxNjI1NDE5Nzc2fQ.Pmss28I7ocp0WFEp9658Bl3Bzgm-zO53-yjQaXLWrgY"
 							]
 						}
 					},
@@ -2278,6 +2343,41 @@
 								"api",
 								"v1",
 								"roles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "mqtt",
+			"item": [
+				{
+					"name": "send-message",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message\": \"Hello Van Dam\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/send-mqtt",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"send-mqtt"
 							]
 						}
 					},
