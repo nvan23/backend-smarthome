@@ -1,8 +1,14 @@
 'use strict'
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const User = require("../../models/user.model")
+const Token = require("../../models/token.model")
+
+const mailer = require('../../utils/mail')
+const htmlMail = require('../../utils/forgotPasswordTemplate')
+const config = require('../../config')
 
 exports.register = async (req, res) => {
   try {
@@ -56,25 +62,106 @@ exports.me = (req, res) => {
     .catch(error => res.status(400).json(error))
 }
 
-exports.resetPassword = async (req, res) => {
+exports.forgotPassword = async (req, res) => {
   try {
     const email = req.body?.email?.trim()
-    if (
-      !email &&
-      !validator.isEmail(email)
-    )
+    if (!email)
+      throw { error: 'Email not empty' }
+
+    if (!validator.isEmail(email))
       throw { error: 'Invalid email address' }
 
     const user = await User.findOne({ email: email })
     if (!user) throw { error: 'User not found' }
 
-    // send mail using node mailer
+    const token = jwt.sign({ id: user.id }, config.email.secret, { expiresIn: config.email.tokenLife })
+    if (!token) throw { error: "Server Error - Generate token" }
 
-    res.status(200).json("Please check your email to reset your password")
+    const tokenDoc = new Token({
+      token: token
+    })
+    await tokenDoc.save()
+    if (!tokenDoc) throw ({ error: "Server Error - Save token" })
+
+    mailer.sendMail(
+      'Reset Password',
+      email,
+      htmlMail.forgotPasswordTemplate(`http://localhost:3000/api/v1/user/reset-password/${token}`)
+    )
+
+    res.status(200).json({ message: "Please check your email to reset your password" })
   } catch (error) {
     res.status(400).json(error)
   }
+}
 
+exports.resetPassword = async (req, res) => {
+  try {
+    const token = req.params?.token?.trim()
+    if (!token) throw { error: 'Invalid input' }
+
+    jwt.verify(token, config.email.secret, async (err, decoded) => {
+      try {
+        if (err) throw { error: 'Token expired' }
+
+        const getToken = await Token.findOne({ token: token })
+        if (!getToken) throw { error: "Token not found" }
+
+        const user = await User.findById(decoded.id).select('id')
+        if (!user) throw { error: 'User not found' }
+
+        res.status(200).json(user)
+      } catch (error) {
+        res.status(400).json(error)
+      }
+    })
+  } catch (error) {
+    res.status(400).json(error)
+  }
+}
+
+exports.changePassword = (req, res) => {
+  try {
+    const token = req.params?.token?.trim()
+    if (!token) throw { error: 'Invalid input' }
+
+    const oldPassword = req.body?.oldPassword?.trim()
+    const newPassword = req.body?.newPassword?.trim()
+    if (!oldPassword || !newPassword)
+      throw { error: 'Old and new password not empty' }
+
+    if (oldPassword === newPassword)
+      throw { error: 'New and old passwords cannot be the same.' }
+
+    jwt.verify(token, config.email.secret, async (err, decoded) => {
+      try {
+        if (err) throw { error: 'Token expired' }
+
+        const getToken = await Token.findOne({ token: token })
+        if (!getToken) throw { error: "Token not found" }
+        if (getToken.changed) throw { error: "Password change session is no longer available." }
+
+        const user = await User.findById(decoded.id)
+        if (!user) throw { error: 'User not found' }
+
+        const isPasswordMatch = await bcrypt.compare(oldPassword, user?.password)
+        if (!isPasswordMatch)
+          throw { error: 'Old password are incorrect.' }
+
+        user.password = newPassword
+        await user.save()
+
+        getToken.changed = true
+        await getToken.save()
+
+        res.status(200).json({ message: 'Reset password successfully' })
+      } catch (error) {
+        res.status(400).json(error)
+      }
+    })
+  } catch (error) {
+    res.status(400).json(error)
+  }
 }
 
 exports.logout = async (req, res) => {
@@ -103,3 +190,4 @@ exports.logoutAll = async (req, res) => {
     .then(data => res.status(200).json(data))
     .catch(error => res.status(400).json(error))
 }
+

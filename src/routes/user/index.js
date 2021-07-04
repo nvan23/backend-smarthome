@@ -20,8 +20,14 @@ router.post('/me/logout-all', requireAuthentication, userController.logoutAll)
 // View logged in user profile
 router.get('/me', requireAuthentication, userController.me)
 
+// Forgot password
+router.get('/forgot-password', userController.forgotPassword)
+
 // Reset password
-router.patch('/me/password/reset', (__, res) => res.json({ msg: "Reset password" }))
+router.get('/reset-password/:token', userController.resetPassword)
+
+// change password
+router.patch('/reset-password/:token', userController.changePassword)
 
 // Update profile user
 router.put('/me', requireAuthentication, (__, res) => res.json({ msg: "Update profile user" }))

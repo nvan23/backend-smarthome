@@ -17,6 +17,10 @@ const rolesRouter = require('./roles')
 const homeRouter = require('./home')
 const trashRouter = require('./trash')
 
+const mqttHandler = require('../services/mqtt')
+const mqttClient = new mqttHandler()
+mqttClient.connect()
+
 router.use(
   '/auth',
   mockUserId(),
@@ -46,5 +50,10 @@ router.use(
 ) // mount home paths
 
 router.use('/trash', trashRouter) // mount trash paths
+
+router.post('/send-mqtt', function (req, res) {
+  mqttClient.sendMessage('mytopic', req.body.message);
+  res.status(200).send("Message sent to mqtt");
+})
 
 module.exports = router
