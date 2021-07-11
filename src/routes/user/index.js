@@ -32,6 +32,21 @@ router.patch('/reset-password/:token', userController.changePassword)
 // Update profile user
 router.put('/me', requireAuthentication, (__, res) => res.json({ msg: "Update profile user" }))
 
+// Add a new email address
+router.patch('/me/email/new', requireAuthentication, userController.addEmail)
+
+// Add a new email address
+router.patch('/email/new/:token', userController.confirmEmail)
+
+// Update gmail address
+router.patch('/me/email', requireAuthentication, userController.requestEmailChange)
+
+// Get data to change email address
+router.get('/email/:token', userController.getDataChangeEmail)
+
+// Update gmail address
+router.patch('/email/:token', userController.changeEmail)
+
 // Room
 router.use('/me/rooms', requireAuthentication, roomsRouter)
 

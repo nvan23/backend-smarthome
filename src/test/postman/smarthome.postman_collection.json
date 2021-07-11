@@ -257,7 +257,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"nvan\",\r\n    \"password\": \"V@m12345\"\r\n}",
+							"raw": "{\r\n    \"username\": \"linh\",\r\n    \"password\": \"Linh@12345\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -408,6 +408,29 @@
 					"response": []
 				},
 				{
+					"name": "reset-password",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/user/reset-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVmZjBmODg4MTFhMGM5OGVhMDAzMyIsImlhdCI6MTYyNTQxNjE3NiwiZXhwIjoxNjI1NDE5Nzc2fQ.Pmss28I7ocp0WFEp9658Bl3Bzgm-zO53-yjQaXLWrgY",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"reset-password",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVmZjBmODg4MTFhMGM5OGVhMDAzMyIsImlhdCI6MTYyNTQxNjE3NiwiZXhwIjoxNjI1NDE5Nzc2fQ.Pmss28I7ocp0WFEp9658Bl3Bzgm-zO53-yjQaXLWrgY"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "update",
 					"request": {
 						"method": "PATCH",
@@ -430,12 +453,27 @@
 					"response": []
 				},
 				{
-					"name": "reset-password",
+					"name": "email-new",
 					"request": {
-						"method": "GET",
-						"header": [],
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"mailserviceb1606951@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/user/reset-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVmZjBmODg4MTFhMGM5OGVhMDAzMyIsImlhdCI6MTYyNTQxNjE3NiwiZXhwIjoxNjI1NDE5Nzc2fQ.Pmss28I7ocp0WFEp9658Bl3Bzgm-zO53-yjQaXLWrgY",
+							"raw": "http://localhost:3000/api/v1/user/me/email/new",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -445,8 +483,136 @@
 								"api",
 								"v1",
 								"user",
-								"reset-password",
-								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVmZjBmODg4MTFhMGM5OGVhMDAzMyIsImlhdCI6MTYyNTQxNjE3NiwiZXhwIjoxNjI1NDE5Nzc2fQ.Pmss28I7ocp0WFEp9658Bl3Bzgm-zO53-yjQaXLWrgY"
+								"me",
+								"email",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "new-email-token",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/user/email/new/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZWFlYzM1YTg1N2I5MzM1NDRjNWExZiIsImVtYWlsIjoiYmxhY2tqb2tlcjA3MDhAZ21haWwuY29tIiwiaWF0IjoxNjI2MDIwNTk0LCJleHAiOjE2MjYwMjQxOTR9.KjjSNrjDShEmNvv8NziRFqZcJtjVYFdtticyfNtEILI",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"email",
+								"new",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZWFlYzM1YTg1N2I5MzM1NDRjNWExZiIsImVtYWlsIjoiYmxhY2tqb2tlcjA3MDhAZ21haWwuY29tIiwiaWF0IjoxNjI2MDIwNTk0LCJleHAiOjE2MjYwMjQxOTR9.KjjSNrjDShEmNvv8NziRFqZcJtjVYFdtticyfNtEILI"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "email",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/user/me/email",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"me",
+								"email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "email-token",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/v1/user/email/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZWFlYzM1YTg1N2I5MzM1NDRjNWExZiIsImlhdCI6MTYyNjAxOTkyOSwiZXhwIjoxNjI2MDIzNTI5fQ.3rVw5QX8LWpZEtg__0SVpkGgPnSETAEQUSPoqs7CDQc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"email",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZWFlYzM1YTg1N2I5MzM1NDRjNWExZiIsImlhdCI6MTYyNjAxOTkyOSwiZXhwIjoxNjI2MDIzNTI5fQ.3rVw5QX8LWpZEtg__0SVpkGgPnSETAEQUSPoqs7CDQc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "email",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"blackjoker0708@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/user/email/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZWFlYzM1YTg1N2I5MzM1NDRjNWExZiIsImlhdCI6MTYyNjAxOTkyOSwiZXhwIjoxNjI2MDIzNTI5fQ.3rVw5QX8LWpZEtg__0SVpkGgPnSETAEQUSPoqs7CDQc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"email",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZWFlYzM1YTg1N2I5MzM1NDRjNWExZiIsImlhdCI6MTYyNjAxOTkyOSwiZXhwIjoxNjI2MDIzNTI5fQ.3rVw5QX8LWpZEtg__0SVpkGgPnSETAEQUSPoqs7CDQc"
 							]
 						}
 					},
@@ -1707,7 +1873,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"name\": \"linh\",\r\n    \"username\": \"linh\",\r\n    \"password\": \"Linh@12345\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
