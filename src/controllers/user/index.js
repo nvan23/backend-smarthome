@@ -310,7 +310,7 @@ exports.resetPassword = async (req, res) => {
         const user = await User.findById(decoded.id).select('id')
         if (!user) throw { error: 'User not found' }
 
-        res.status(200).json(user)
+        res.status(200).json({ userId: user, isChanged: getToken.changed })
       } catch (error) {
         res.status(400).json(error)
       }
@@ -344,7 +344,10 @@ exports.changePassword = (req, res) => {
         getToken.changed = true
         await getToken.save()
 
-        res.status(200).json({ message: 'Reset password successfully' })
+        res.status(200).json({
+          message: 'Reset password successfully',
+          isChanged: getToken.changed
+        })
       } catch (error) {
         res.status(400).json(error)
       }
