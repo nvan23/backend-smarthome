@@ -431,6 +431,38 @@
 					"response": []
 				},
 				{
+					"name": "change-password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"newPassword\": \"Truong@123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v1/user/reset-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVmZjBmODg4MTFhMGM5OGVhMDAzMyIsImlhdCI6MTYyNTQxNjE3NiwiZXhwIjoxNjI1NDE5Nzc2fQ.Pmss28I7ocp0WFEp9658Bl3Bzgm-zO53-yjQaXLWrgY",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"reset-password",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVmZjBmODg4MTFhMGM5OGVhMDAzMyIsImlhdCI6MTYyNTQxNjE3NiwiZXhwIjoxNjI1NDE5Nzc2fQ.Pmss28I7ocp0WFEp9658Bl3Bzgm-zO53-yjQaXLWrgY"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "update",
 					"request": {
 						"method": "PATCH",
@@ -613,38 +645,6 @@
 								"user",
 								"email",
 								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZWFlYzM1YTg1N2I5MzM1NDRjNWExZiIsImlhdCI6MTYyNjAxOTkyOSwiZXhwIjoxNjI2MDIzNTI5fQ.3rVw5QX8LWpZEtg__0SVpkGgPnSETAEQUSPoqs7CDQc"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "change-password",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"oldPassword\": \"Van@12345\",\r\n    \"newPassword\": \"Truong@123456\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v1/user/reset-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVmZjBmODg4MTFhMGM5OGVhMDAzMyIsImlhdCI6MTYyNTQxNjE3NiwiZXhwIjoxNjI1NDE5Nzc2fQ.Pmss28I7ocp0WFEp9658Bl3Bzgm-zO53-yjQaXLWrgY",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"user",
-								"reset-password",
-								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVmZjBmODg4MTFhMGM5OGVhMDAzMyIsImlhdCI6MTYyNTQxNjE3NiwiZXhwIjoxNjI1NDE5Nzc2fQ.Pmss28I7ocp0WFEp9658Bl3Bzgm-zO53-yjQaXLWrgY"
 							]
 						}
 					},

@@ -325,13 +325,7 @@ exports.changePassword = (req, res) => {
     const token = req.params?.token?.trim()
     if (!token) throw { error: 'Invalid input' }
 
-    const oldPassword = req.body?.oldPassword?.trim()
     const newPassword = req.body?.newPassword?.trim()
-    if (!oldPassword || !newPassword)
-      throw { error: 'Old and new password not empty' }
-
-    if (oldPassword === newPassword)
-      throw { error: 'New and old passwords cannot be the same.' }
 
     jwt.verify(token, config.email.secret, async (err, decoded) => {
       try {
@@ -343,10 +337,6 @@ exports.changePassword = (req, res) => {
 
         const user = await User.findById(decoded.id)
         if (!user) throw { error: 'User not found' }
-
-        const isPasswordMatch = await bcrypt.compare(oldPassword, user?.password)
-        if (!isPasswordMatch)
-          throw { error: 'Old password are incorrect.' }
 
         user.password = newPassword
         await user.save()
