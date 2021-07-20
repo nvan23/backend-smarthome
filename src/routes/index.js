@@ -51,9 +51,15 @@ router.use(
 
 router.use('/trash', trashRouter) // mount trash paths
 
-router.post('/send-mqtt', function (req, res) {
-  mqttClient.sendMessage('mytopic', req.body.message);
-  res.status(200).send("Message sent to mqtt");
+router.post('/sub', function (req, res) {
+  mqttClient.mqttListener()
+  mqttClient.subscribe('topic-fire')
+  res.status(200).json({ topic: "topic-fire" })
+})
+
+router.post('/pub', function (req, res) {
+  mqttClient.publish('topic-fire', 'pub-topic-fire-1')
+  res.status(200).json({ topic: "pub-topic-fire" })
 })
 
 module.exports = router

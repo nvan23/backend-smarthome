@@ -1,6 +1,7 @@
 const mqtt = require('mqtt')
 const config = require('../config')
 
+const Device = require('../models/device.model')
 
 class MqttHandler {
   constructor() {
@@ -14,7 +15,7 @@ class MqttHandler {
     // Connect mqtt with credentials (in case of needed, otherwise we can omit 2nd param)
     this.mqttClient = mqtt.connect(this.host, { username: this.username, password: this.password })
 
-    // Mqtt error calback
+    // Mqtt error callback
     this.mqttClient.on('error', (err) => {
       console.log(err);
       this.mqttClient.end()
@@ -25,22 +26,57 @@ class MqttHandler {
       console.log(`mqtt client connected`)
     });
 
-    // mqtt subscriptions
-    this.mqttClient.subscribe('mytopic', { qos: 0 })
-
-    // When a message arrives, console.log it
-    this.mqttClient.on('message', function (topic, message) {
-      console.log(message.toString())
-    });
-
     this.mqttClient.on('close', () => {
       console.log(`mqtt client disconnected`)
     });
   }
 
-  // Sends a mqtt message to topic: mytopic
-  sendMessage (topic, message) {
-    this.mqttClient.publish(topic, message)
+  mqttListener () {
+    // When a message arrives, console.log it
+    this.mqttClient.on('message', function (topic, message) {
+      console.log("Subscriber on ", topic, "Channel: ", message.toString())
+      topic.includes('has-data') && Device
+        .findOneAndUpdate(
+          { topic: topic },
+          { $push: { rooms: parseInt(message) } },
+          { new: true }
+        )
+    });
+  }
+
+  async initSubscribe () {
+    // let topics = { "light": 1, "humidity": 1, "temperature": 1 } 
+    const rawSubscriberChannels = await Device.find().select('topic')
+    const topics = rawSubscriberChannels.length
+      ? rawSubscriberChannels.map(sub => sub.topic)
+      : []
+    console.log("All channels: ", topics)
+    this.mqttClient.subscribe(topics)
+  }
+
+  subscribe (topic) {
+    this.mqttClient.subscribe(topic)
+  }
+
+  unsubscribe (topic) {
+    this.mqttClient.unsubscribe(topic)
+  }
+
+  publish (topic, message) {
+    this.mqttClient.connected &&
+      this.mqttClient.publish(
+        topic,
+        message,
+        {
+          retain: false,
+          qos: 1,
+        }
+      )
+    console.log("Publisher on ", topic, " Channel: ", message)
+  }
+
+  handleData () {
+
   }
 }
 

@@ -6,12 +6,7 @@ const deviceSchema = mongoose.Schema({
     required: true,
     trim: true
   },
-  publisher: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  subscriber: {
+  topic: {
     type: String,
     required: true,
     trim: true,
@@ -38,6 +33,11 @@ const deviceSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  hasData: {
+    type: Boolean,
+    default: false,
+  },
+  data: [],
 }, { timestamps: true })
 
 const Device = mongoose.model('Device', deviceSchema)

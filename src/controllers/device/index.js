@@ -7,6 +7,10 @@ const Device = require("../../models/device.model")
 
 const checker = require('../../utils/checker')
 
+const mqttHandler = require('../../services/mqtt')
+const mqttClient = new mqttHandler()
+mqttClient.connect()
+
 exports.getAllDevices = async (req, res) => {
   try {
     Device
@@ -34,25 +38,34 @@ exports.getDevice = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    if (
-      !req.body?.name?.trim() &&
-      !req.body?.publisher?.trim() &&
-      !req.body?.subscriber?.trim()
-    )
-      throw { error: "Input error" }
+    const name = req.body?.name?.trim()
+    const topic = req.body?.topic?.trim()
+    const hasData = req.body?.hasData
+
+    if (!name && !topic) throw { error: "Input error" }
 
     const user = await User.findById(req.user.id)
-    if (!user) throw { error: "Cannot found user" }
-    if (!user.homeId) throw { error: "Cannot found your house" }
+    if (!user) throw { error: "User not found" }
+    if (!user.homeId) throw { error: "Your home not found" }
 
     const home = await Home.findById(user.homeId)
-    if (!home) throw { error: "Cannot found home" }
+    if (!home) throw { error: "Home not found" }
 
-    req.body.homeId = home._id
+    const isDeviceNameExist = await Device.find({ name: name })
+    if (isDeviceNameExist.length)
+      throw { error: "Device name already exists." }
+
+    const isDeviceTopicExist = await Device.find({ topic: topic })
+    if (isDeviceTopicExist.length)
+      throw { error: "Topic channel already exists." }
+
+    req.body.homeId = home.id
+    hasData ? req.body.topic = topic + "has-data" : hasData
 
     const device = new Device(req.body)
     if (!device) throw { error: "Cannot create a new device at your home" }
     await device.save()
+    mqttClient.subscribe(topic)
     res.status(200).json(device)
 
     await Home.findByIdAndUpdate(
@@ -62,6 +75,7 @@ exports.create = async (req, res) => {
       },
       { new: true }
     )
+
   } catch (error) {
     res.status(400).json(error)
   }
@@ -108,8 +122,7 @@ exports.update = async (req, res) => {
 
     if (
       !req.body?.name?.trim() &&
-      !req.body?.publisher?.trim() &&
-      !req.body?.subscriber?.trim()
+      !req.body?.topic?.trim()
     )
       throw { error: "Input error" }
 
@@ -117,14 +130,15 @@ exports.update = async (req, res) => {
       req.params.id,
       {
         name: req.body?.name?.trim(),
-        publisher: req.body?.publisher?.trim(),
-        subscriber: req.body?.subscriber?.trim(),
+        topic: req.body?.topic?.trim(),
         description: req.body?.description?.trim(),
       },
       { new: true }
     )
 
     if (!device) throw { error: "Cannot update this device at the home" }
+
+    mqttClient.subscribe(topic)
 
     res.status(200).json(device)
   } catch (error) {
