@@ -21,7 +21,7 @@ router.post('/me/logout-all', requireAuthentication, userController.logoutAll)
 router.get('/me', requireAuthentication, userController.me)
 
 // Forgot password
-router.get('/forgot-password', userController.forgotPassword)
+router.post('/forgot-password', userController.forgotPassword)
 
 // Reset password
 router.get('/reset-password/:token', userController.resetPassword)
