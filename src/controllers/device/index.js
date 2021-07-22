@@ -117,21 +117,22 @@ exports.block = (status) => {
 
 exports.update = async (req, res) => {
   try {
+    const name = req.body?.name?.trim()
+    const topic = req.body?.topic?.trim()
+    const description = req.body?.description?.trim()
+
     if (!checker.isObjectId(req.params.id))
       throw { error: "Device not found" }
 
-    if (
-      !req.body?.name?.trim() &&
-      !req.body?.topic?.trim()
-    )
-      throw { error: "Input error" }
+    if (!name && !topic && !description)
+      throw { error: "Input error - Not empty" }
 
     const device = await Device.findByIdAndUpdate(
       req.params.id,
       {
-        name: req.body?.name?.trim(),
-        topic: req.body?.topic?.trim(),
-        description: req.body?.description?.trim(),
+        name: name,
+        topic: topic,
+        description: description,
       },
       { new: true }
     )
