@@ -306,7 +306,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"nvan\",\r\n    \"password\": \"V@m12345\"\r\n}",
+							"raw": "{\r\n    \"username\": \"host\",\r\n    \"password\": \"Truong@123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1521,7 +1521,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"fire\",\r\n    \"top\": \"fire\",\r\n    \"description\": \"Fire sensor\"\r\n}",
+									"raw": "{\r\n    \"name\": \"fire\",\r\n    \"topic\": \"fire\",\r\n    \"description\": \"Fire sensor\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1529,7 +1529,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/devices/60d6dbf64363a60f6080ee38",
+									"raw": "http://localhost:3000/api/v1/home/devices/60f98fa6226563189c3eb313",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -1540,7 +1540,7 @@
 										"v1",
 										"home",
 										"devices",
-										"60d6dbf64363a60f6080ee38"
+										"60f98fa6226563189c3eb313"
 									]
 								}
 							},
