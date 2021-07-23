@@ -76,7 +76,7 @@ exports.turnOn = (status) => {
       device.isLive = status
       await device.save()
 
-      res.status(400).json({
+      res.status(200).json({
         deviceId: device?.id,
         isLive: device?.isLive,
       })
