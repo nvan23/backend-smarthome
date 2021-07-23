@@ -42,6 +42,7 @@ exports.getDevice = async (req, res) => {
 exports.turnOn = (status) => {
   return async function (req, res) {
     try {
+
       if (!checker.isObjectId(req?.params?.id))
         throw { error: "Invalid input" }
 

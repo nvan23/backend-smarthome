@@ -69,7 +69,7 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/user/me/rooms/60d6e79018c76410a497d78a/devices",
+											"raw": "http://localhost:3000/api/v1/user/me/rooms/60f44705e18ac22760d21692/devices",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -81,7 +81,7 @@
 												"user",
 												"me",
 												"rooms",
-												"60d6e79018c76410a497d78a",
+												"60f44705e18ac22760d21692",
 												"devices"
 											]
 										}
@@ -132,7 +132,7 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/user/me/rooms/60d6e79018c76410a497d78a/devices/60db3b292acba211cc6e9fb9",
+											"raw": "http://localhost:3000/api/v1/user/me/rooms/60f44705e18ac22760d21692/devices/60f98fa6226563189c3eb313/turn-on",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -144,9 +144,10 @@
 												"user",
 												"me",
 												"rooms",
-												"60d6e79018c76410a497d78a",
+												"60f44705e18ac22760d21692",
 												"devices",
-												"60db3b292acba211cc6e9fb9"
+												"60f98fa6226563189c3eb313",
+												"turn-on"
 											]
 										}
 									},
@@ -156,14 +157,30 @@
 									"name": "turn-off",
 									"request": {
 										"method": "PATCH",
-										"header": [],
+										"header": [
+											{
+												"key": "x-access-token",
+												"value": "{{TOKEN}}",
+												"type": "text"
+											}
+										],
 										"url": {
-											"raw": "?x-access-token={{TOKEN}}",
-											"query": [
-												{
-													"key": "x-access-token",
-													"value": "{{TOKEN}}"
-												}
+											"raw": "http://localhost:3000/api/v1/user/me/rooms/60f44705e18ac22760d21692/devices/60f98fa6226563189c3eb313/turn-off",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"api",
+												"v1",
+												"user",
+												"me",
+												"rooms",
+												"60f44705e18ac22760d21692",
+												"devices",
+												"60f98fa6226563189c3eb313",
+												"turn-off"
 											]
 										}
 									},
@@ -306,7 +323,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"host\",\r\n    \"password\": \"Truong@123456\"\r\n}",
+							"raw": "{\r\n    \"username\": \"nvan\",\r\n    \"password\": \"V@m12345\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -750,7 +767,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"deviceId\": \"60f447c44263ec12d89a1a50\"\r\n}",
+											"raw": "{\r\n    \"deviceId\": \"60f98fa6226563189c3eb313\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -788,7 +805,7 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/devices/60d6e5ed72cc46239c5d37f8/turn-on",
+											"raw": "http://localhost:3000/api/v1/home/rooms/60f44705e18ac22760d21692/devices/60f98fa6226563189c3eb313/turn-on",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -798,8 +815,10 @@
 												"api",
 												"v1",
 												"home",
+												"rooms",
+												"60f44705e18ac22760d21692",
 												"devices",
-												"60d6e5ed72cc46239c5d37f8",
+												"60f98fa6226563189c3eb313",
 												"turn-on"
 											]
 										}
@@ -810,9 +829,15 @@
 									"name": "turn-off",
 									"request": {
 										"method": "PATCH",
-										"header": [],
+										"header": [
+											{
+												"key": "x-access-token",
+												"value": "{{HOST_TOKEN}}",
+												"type": "text"
+											}
+										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/devices/60d6e5ed72cc46239c5d37f8/turn-off?x-access-token={{HOST_TOKEN}}",
+											"raw": "http://localhost:3000/api/v1/home/rooms/60f44705e18ac22760d21692/devices/60f98fa6226563189c3eb313/turn-off",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -822,15 +847,11 @@
 												"api",
 												"v1",
 												"home",
+												"rooms",
+												"60f44705e18ac22760d21692",
 												"devices",
-												"60d6e5ed72cc46239c5d37f8",
+												"60f98fa6226563189c3eb313",
 												"turn-off"
-											],
-											"query": [
-												{
-													"key": "x-access-token",
-													"value": "{{HOST_TOKEN}}"
-												}
 											]
 										}
 									},
@@ -914,7 +935,7 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60d6e79018c76410a497d78a/members",
+											"raw": "http://localhost:3000/api/v1/home/rooms/60f44705e18ac22760d21692/members",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -925,7 +946,7 @@
 												"v1",
 												"home",
 												"rooms",
-												"60d6e79018c76410a497d78a",
+												"60f44705e18ac22760d21692",
 												"members"
 											]
 										}
@@ -953,7 +974,7 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60db392763f4952704e720ed/members",
+											"raw": "http://localhost:3000/api/v1/home/rooms/60f44705e18ac22760d21692/members",
 											"protocol": "http",
 											"host": [
 												"localhost"
@@ -964,7 +985,7 @@
 												"v1",
 												"home",
 												"rooms",
-												"60db392763f4952704e720ed",
+												"60f44705e18ac22760d21692",
 												"members"
 											]
 										}

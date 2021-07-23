@@ -16,4 +16,10 @@ router.delete('/:id', deviceController.removeDevice)
 // remove all device from room
 router.delete('/', deviceController.removeAllDevices)
 
+// turn on device of a room
+router.patch('/:id/turn-on', deviceController.turnOn(true))
+
+// turn off device of a room
+router.patch('/:id/turn-off', deviceController.turnOn(false))
+
 module.exports = router
