@@ -13,8 +13,14 @@ mqttClient.connect()
 
 exports.getAllCameras = async (req, res) => {
   try {
+    const user = await User
+      .findById(req?.user?.id)
+      .select('currentHome')
+
+    const homeId = req?.home?.id || user?.currentHome
+
     Camera
-      .find({ homeId: req.home.id })
+      .find({ homeId: homeId })
       .sort({ createdAt: 'desc' })
       .then(data => res.status(200).json(data))
       .catch(error => res.status(400).json(error))

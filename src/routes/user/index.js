@@ -1,6 +1,7 @@
 const express = require('express')
 
 const devicesRouter = require('./devices')
+const camerasRouter = require('./cameras')
 const roomsRouter = require('./rooms')
 
 const userController = require('../../controllers/user')
@@ -52,6 +53,9 @@ router.patch('/email/:token', userController.changeEmail)
 
 // Devices
 router.use('/me/devices', requireAuthentication, devicesRouter)
+
+// Devices
+router.use('/me/cameras', requireAuthentication, camerasRouter)
 
 // Room
 router.use('/me/rooms', requireAuthentication, roomsRouter)
