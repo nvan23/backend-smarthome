@@ -69,7 +69,9 @@ exports.create = async (req, res) => {
     req.body.homeId = home.id
 
     const device = new Device(req.body)
-    if (!device) throw { error: "Cannot create a new device at your home" }
+    if (!device)
+      throw { error: "Cannot create a new device at your home" }
+
     await device.save()
     mqttClient.subscribe(topic)
     res.status(200).json(device)
@@ -147,9 +149,10 @@ exports.update = async (req, res) => {
       { new: true }
     )
 
-    if (!device) throw { error: "Cannot update this device at the home" }
+    if (!device)
+      throw { error: "Cannot update this device at the home" }
 
-    mqttClient.subscribe(topic)
+    mqttClient.subscribe(topic || device.topic)
 
     res.status(200).json(device)
   } catch (error) {

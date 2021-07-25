@@ -45,7 +45,6 @@ class MqttHandler {
   }
 
   async initSubscribe () {
-    // let topics = { "light": 1, "humidity": 1, "temperature": 1 } 
     const rawSubscriberChannels = await Device.find().select('topic')
     const topics = rawSubscriberChannels.length
       ? rawSubscriberChannels.map(sub => sub.topic)
@@ -56,6 +55,9 @@ class MqttHandler {
 
   subscribe (topic) {
     this.mqttClient.subscribe(topic)
+    this.mqttClient.on('message', function (topic, message) {
+      console.log("Subscriber on ", topic, "Channel: ", message.toString())
+    });
   }
 
   unsubscribe (topic) {
