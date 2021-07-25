@@ -49,7 +49,7 @@ exports.turnOn = (status) => {
       const device = await Device.findById(req?.params?.id)
       if (!device) throw { error: "Device not found." }
 
-      mqttClient.publish(device?.topic || 'unknown', status ? 'turn-on' : 'turn-off')
+      mqttClient.publish(device?.topic || 'unknown', status ? '1' : '0')
 
       device.isLive = status
       await device.save()
