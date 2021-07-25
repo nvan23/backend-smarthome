@@ -44,7 +44,6 @@ exports.create = async (req, res) => {
     const name = req.body?.name?.trim()
     const topic = req.body?.topic?.trim()
     const type = req.body?.type?.trim()
-    const hasData = req.body?.hasData
 
     if (!name && !topic && !type)
       throw { error: "Input error - Input empty" }
@@ -68,7 +67,6 @@ exports.create = async (req, res) => {
       throw { error: "Topic channel already exists." }
 
     req.body.homeId = home.id
-    hasData ? req.body.topic = topic + "has-data" : hasData
 
     const device = new Device(req.body)
     if (!device) throw { error: "Cannot create a new device at your home" }
@@ -128,25 +126,24 @@ exports.update = async (req, res) => {
     const name = req.body?.name?.trim()
     const topic = req.body?.topic?.trim()
     const type = req.body?.type?.trim()
-    const description = req.body?.description?.trim()
 
     if (!checker.isObjectId(req.params.id))
       throw { error: "Device not found" }
 
-    if (!name && !topic && !description)
-      throw { error: "Input error - Not empty" }
+    const isDeviceNameExist = await Device.find({ name: name })
+    if (isDeviceNameExist.length)
+      throw { error: "Device name already exists." }
+
+    const isDeviceTopicExist = await Device.find({ topic: topic })
+    if (isDeviceTopicExist.length)
+      throw { error: "Topic channel already exists." }
 
     if (!devicesTypes.includes(type))
       throw { error: "Input error - Type not found" }
 
     const device = await Device.findByIdAndUpdate(
       req.params.id,
-      {
-        name: name,
-        topic: topic,
-        type: type,
-        description: description,
-      },
+      req.body,
       { new: true }
     )
 
@@ -167,6 +164,7 @@ exports.delete = async (req, res) => {
 
     const device = await Device.findById(req.params.id)
     if (!device) throw { error: "Device not found" }
+
     if (device?.homeId.toString() !== req.home.id.toString())
       throw { error: "Not authorized to remove this device" }
 

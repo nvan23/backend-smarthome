@@ -35,10 +35,10 @@ class MqttHandler {
     // When a message arrives, console.log it
     this.mqttClient.on('message', function (topic, message) {
       console.log("Subscriber on ", topic, "Channel: ", message.toString())
-      topic.includes('has-data') && Device
+      Device
         .findOneAndUpdate(
           { topic: topic },
-          { $push: { rooms: parseInt(message) } },
+          { $push: { data: parseInt(message) } },
           { new: true }
         )
     });
