@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 
-const deviceSchema = mongoose.Schema({
+const cameraSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
     trim: true
   },
-  topic: {
+  ip: {
     type: String,
     required: true,
     trim: true,
@@ -15,16 +15,6 @@ const deviceSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Home',
     required: true,
-  },
-  roomId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    default: null
-  },
-  type: {
-    type: String,
-    required: true,
-    trim: true,
   },
   description: {
     type: String,
@@ -38,13 +28,8 @@ const deviceSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  hasData: {
-    type: Boolean,
-    default: false,
-  },
-  data: [],
 }, { timestamps: true })
 
-const Device = mongoose.model('Device', deviceSchema)
+const Camera = mongoose.model('Camera', cameraSchema)
 
-module.exports = Device
+module.exports = Camera

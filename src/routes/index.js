@@ -15,8 +15,11 @@ const userRouter = require('./user')
 const usersRouter = require('./users')
 const rolesRouter = require('./roles')
 const homeRouter = require('./home')
-const homesRouter = require('./homes')
 const trashRouter = require('./trash')
+
+const mqttHandler = require('../services/mqtt')
+const mqttClient = new mqttHandler()
+mqttClient.connect()
 
 router.use(
   '/auth',
@@ -29,7 +32,7 @@ router.use('/user', userRouter) // mount user paths
 router.use(
   '/users',
   requireAuthentication,
-  requireAuthorization(config.roles.admin),
+  requireAuthorization(config.roles.host),
   usersRouter
 ) // mount user paths
 
@@ -46,13 +49,17 @@ router.use(
   homeRouter
 ) // mount home paths
 
-router.use(
-  '/homes',
-  requireAuthentication,
-  requireAuthorization(config.roles.admin),
-  homesRouter
-) // mount homes paths
-
 router.use('/trash', trashRouter) // mount trash paths
+
+router.post('/sub', function (req, res) {
+  mqttClient.mqttListener()
+  mqttClient.subscribe('topic-fire')
+  res.status(200).json({ topic: "topic-fire" })
+})
+
+router.post('/pub', function (req, res) {
+  mqttClient.publish('topic-fire', 'pub-topic-fire-1')
+  res.status(200).json({ topic: "pub-topic-fire" })
+})
 
 module.exports = router

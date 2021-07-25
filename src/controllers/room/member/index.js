@@ -27,7 +27,7 @@ exports.create = async (req, res) => {
 
     const room = await Room.findById(req.room.id)
 
-    if (room.members.includes(req.body.userId))
+    if (room.members.some(m => m?.userId?.toString() === req.body?.userId?.trim().toString()))
       throw { error: "User already exist at this room" }
 
     const addMember = await Room
@@ -141,7 +141,7 @@ exports.delete = async (req, res) => {
     const room = await Room
       .findByIdAndUpdate(
         req.room.id,
-        { $pull: { members: req.params.id } },
+        { $pull: { members: { userId: req.params.id } } },
         { new: true }
       )
     if (!room) throw { error: "Cannot remove member at this room" }

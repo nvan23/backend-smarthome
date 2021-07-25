@@ -11,7 +11,7 @@ const router = express.Router()
 // get all roles
 router.get(
   '/',
-  requireAuthorization(config.roles.admin),
+  requireAuthorization(config.roles.host),
   rolesController.getAllRoles
 )
 
@@ -24,28 +24,28 @@ router.get(
 // create an role
 router.post(
   '/',
-  requireAuthorization(config.roles.admin),
+  requireAuthorization(config.roles.host),
   rolesController.create
 )
 
 // update an role
 router.put(
   '/:id',
-  requireAuthorization(config.roles.admin),
+  requireAuthorization(config.roles.host),
   rolesController.update
 )
 
 // delete a role
 router.delete(
   '/:id',
-  requireAuthorization(config.roles.admin),
+  requireAuthorization(config.roles.host),
   rolesController.delete
 )
 
 // delete all roles
 router.delete(
   '/',
-  requireAuthorization(config.roles.admin),
+  requireAuthorization(config.roles.host),
   rolesController.deleteAllRoles
 )
 

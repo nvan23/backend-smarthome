@@ -21,7 +21,6 @@ const userSchema = mongoose.Schema({
   },
   email: {
     type: String,
-    required: true,
     unique: true,
     lowercase: true,
     validate: value => {
@@ -123,6 +122,16 @@ userSchema.methods.initUserRole = async function () {
   // Generate an auth token for the user
   const user = this
   const role = await Role.findOne({ key: config.roles.user })
+  if (role) {
+    user.roles = user.roles.concat(role._id)
+  }
+  await user.save()
+}
+
+userSchema.methods.initHostRole = async function () {
+  // Generate an auth token for the user
+  const user = this
+  const role = await Role.findOne({ key: config.roles.host })
   if (role) {
     user.roles = user.roles.concat(role._id)
   }

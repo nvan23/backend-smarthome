@@ -1,4 +1,8 @@
 const express = require('express')
+
+const devicesRouter = require('./devices')
+const roomsRouter = require('./rooms')
+
 const userController = require('../../controllers/user')
 const requireAuthentication = require('../../middleware/requireAuthentication')
 
@@ -19,10 +23,37 @@ router.post('/me/logout-all', requireAuthentication, userController.logoutAll)
 // View logged in user profile
 router.get('/me', requireAuthentication, userController.me)
 
+// Forgot password
+router.post('/forgot-password', userController.forgotPassword)
+
 // Reset password
-router.patch('/me/password/reset', (__, res) => res.json({ msg: "Reset password" }))
+router.get('/reset-password/:token', userController.resetPassword)
+
+// change password
+router.patch('/reset-password/:token', userController.changePassword)
 
 // Update profile user
 router.put('/me', requireAuthentication, (__, res) => res.json({ msg: "Update profile user" }))
+
+// Add a new email address
+router.patch('/me/email/new', requireAuthentication, userController.addEmail)
+
+// Add a new email address
+router.patch('/email/new/:token', userController.confirmEmail)
+
+// Update gmail address
+router.patch('/me/email', requireAuthentication, userController.requestEmailChange)
+
+// Get data to change email address
+router.get('/email/:token', userController.getDataChangeEmail)
+
+// Update gmail address
+router.patch('/email/:token', userController.changeEmail)
+
+// Devices
+router.use('/me/devices', requireAuthentication, devicesRouter)
+
+// Room
+router.use('/me/rooms', requireAuthentication, roomsRouter)
 
 module.exports = router

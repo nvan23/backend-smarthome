@@ -33,6 +33,10 @@ const homeSchema = mongoose.Schema({
   devices: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Device'
+  }],
+  cameras: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Device'
   }]
 }, { timestamps: true })
 

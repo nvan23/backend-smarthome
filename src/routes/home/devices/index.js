@@ -1,35 +1,35 @@
 const express = require('express')
-
 const router = express.Router()
+const deviceController = require('../../../controllers/device')
 
 // create a new devices
-router.post('/', (__, res) => res.json({ msg: "create an new devices" }))
+router.post('/', deviceController.create)
 
 // get all devices of the home
-router.get('/', (__, res) => res.json({ msg: "get all devices of the home" }))
+router.get('/', deviceController.getAllDevices)
 
 // get a device
-router.get('/:id', (__, res) => res.json({ msg: "get a device" }))
+router.get('/:id', deviceController.getDevice)
 
 // update information of a device
-router.put('/:id', (__, res) => res.json({ msg: "update information of a device" }))
+router.put('/:id', deviceController.update)
 
 // block grantable of all devices
-router.patch('/block', (__, res) => res.json({ msg: "block grantable of all devices" }))
+router.patch('/block', deviceController.blockAllDevices(true))
 
 // block grantable of a device
-router.patch('/block/:id', (__, res) => res.json({ msg: "block grantable of a device" }))
+router.patch('/block/:id', deviceController.block(true))
 
 // active grantable of all devices
-router.patch('/active', (__, res) => res.json({ msg: "active grantable of all devices" }))
+router.patch('/active', deviceController.blockAllDevices(false))
 
 // active grantable of a device
-router.patch('/active/:id', (__, res) => res.json({ msg: "active grantable of a device" }))
+router.patch('/active/:id', deviceController.block(false))
 
 // delete a device
-router.delete('/:id', (__, res) => res.json({ msg: "delete a device" }))
+router.delete('/:id', deviceController.delete)
 
 // delete all devices
-router.delete('/', (__, res) => res.json({ msg: "delete all devices" }))
+router.delete('/', deviceController.deleteAllDevices)
 
 module.exports = router
