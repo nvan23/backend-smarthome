@@ -1,5 +1,8 @@
 const express = require('express')
+
+const devicesRouter = require('./devices')
 const roomsRouter = require('./rooms')
+
 const userController = require('../../controllers/user')
 const requireAuthentication = require('../../middleware/requireAuthentication')
 
@@ -46,6 +49,9 @@ router.get('/email/:token', userController.getDataChangeEmail)
 
 // Update gmail address
 router.patch('/email/:token', userController.changeEmail)
+
+// Devices
+router.use('/me/devices', requireAuthentication, devicesRouter)
 
 // Room
 router.use('/me/rooms', requireAuthentication, roomsRouter)

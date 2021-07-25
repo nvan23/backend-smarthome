@@ -1,8 +1,6 @@
 'use strict'
 
-const Home = require("../../../models/home.model")
 const Room = require("../../../models/room.model")
-const User = require("../../../models/user.model")
 const Device = require("../../../models/device.model")
 
 const checker = require('../../../utils/checker')

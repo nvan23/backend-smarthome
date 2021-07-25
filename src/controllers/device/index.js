@@ -6,10 +6,13 @@ const User = require("../../models/user.model")
 const Device = require("../../models/device.model")
 
 const checker = require('../../utils/checker')
+const deviceObjTypes = require('../../constants/deviceTypes')
 
 const mqttHandler = require('../../services/mqtt')
 const mqttClient = new mqttHandler()
 mqttClient.connect()
+
+const devicesTypes = Object.values(deviceObjTypes) || []
 
 exports.getAllDevices = async (req, res) => {
   try {
@@ -40,9 +43,14 @@ exports.create = async (req, res) => {
   try {
     const name = req.body?.name?.trim()
     const topic = req.body?.topic?.trim()
+    const type = req.body?.type?.trim()
     const hasData = req.body?.hasData
 
-    if (!name && !topic) throw { error: "Input error" }
+    if (!name && !topic && !type)
+      throw { error: "Input error - Input empty" }
+
+    if (!devicesTypes.includes(type))
+      throw { error: "Input error - Not found device type" }
 
     const user = await User.findById(req.user.id)
     if (!user) throw { error: "User not found" }
@@ -119,6 +127,7 @@ exports.update = async (req, res) => {
   try {
     const name = req.body?.name?.trim()
     const topic = req.body?.topic?.trim()
+    const type = req.body?.type?.trim()
     const description = req.body?.description?.trim()
 
     if (!checker.isObjectId(req.params.id))
@@ -127,11 +136,15 @@ exports.update = async (req, res) => {
     if (!name && !topic && !description)
       throw { error: "Input error - Not empty" }
 
+    if (!devicesTypes.includes(type))
+      throw { error: "Input error - Type not found" }
+
     const device = await Device.findByIdAndUpdate(
       req.params.id,
       {
         name: name,
         topic: topic,
+        type: type,
         description: description,
       },
       { new: true }

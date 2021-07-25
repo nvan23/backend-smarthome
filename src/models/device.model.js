@@ -21,6 +21,11 @@ const deviceSchema = mongoose.Schema({
     ref: 'User',
     default: null
   },
+  type: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   description: {
     type: String,
     max: 500,
