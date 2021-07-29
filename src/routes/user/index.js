@@ -1,6 +1,7 @@
 const express = require('express')
 
 const devicesRouter = require('./devices')
+const camerasRouter = require('./cameras')
 const roomsRouter = require('./rooms')
 
 const userController = require('../../controllers/user')
@@ -33,7 +34,7 @@ router.get('/reset-password/:token', userController.resetPassword)
 router.patch('/reset-password/:token', userController.changePassword)
 
 // Update profile user
-router.put('/me', requireAuthentication, (__, res) => res.json({ msg: "Update profile user" }))
+router.patch('/me', requireAuthentication, userController.update)
 
 // Add a new email address
 router.patch('/me/email/new', requireAuthentication, userController.addEmail)
@@ -52,6 +53,9 @@ router.patch('/email/:token', userController.changeEmail)
 
 // Devices
 router.use('/me/devices', requireAuthentication, devicesRouter)
+
+// Devices
+router.use('/me/cameras', requireAuthentication, camerasRouter)
 
 // Room
 router.use('/me/rooms', requireAuthentication, roomsRouter)

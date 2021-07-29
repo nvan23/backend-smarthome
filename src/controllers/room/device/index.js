@@ -37,6 +37,8 @@ exports.addDevice = async (req, res) => {
 
     const device = await Device.findById(req.body?.deviceId?.trim())
     if (!device) throw { error: "Device not found" }
+    if (device?.roomId)
+      throw { error: "This device was used in another room" }
 
     const room = await Room
       .findByIdAndUpdate(

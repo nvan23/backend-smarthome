@@ -357,6 +357,31 @@ exports.changePassword = (req, res) => {
   }
 }
 
+
+exports.update = async (req, res) => {
+  try {
+    const name = req.body?.name?.trim()
+    if (!name)
+      throw { error: "Input Error - Empty Input" }
+
+    const user = await User
+      .findByIdAndUpdate(
+        req.user.id,
+        { name: name },
+        { new: true }
+      )
+      .select('name')
+
+    if (!user)
+      throw { error: "Cannot update user profile at now" }
+
+    res.status(200).json(user)
+  } catch (error) {
+    res.status(400).json(error)
+  }
+}
+
+
 exports.logout = async (req, res) => {
   User
     .findOneAndUpdate(
