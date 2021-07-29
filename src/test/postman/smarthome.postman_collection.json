@@ -29,12 +29,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/auth/token/refresh",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/auth/token/refresh",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -51,6 +49,38 @@
 		{
 			"name": "user",
 			"item": [
+				{
+					"name": "devices",
+					"item": [
+						{
+							"name": "devices",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{DOMAIN}}/api/v1/user/me/devices",
+									"host": [
+										"{{DOMAIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"me",
+										"devices"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
 				{
 					"name": "rooms",
 					"item": [
@@ -69,12 +99,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/user/me/rooms/60f44705e18ac22760d21692/devices",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/user/me/rooms/60f44705e18ac22760d21692/devices",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -100,12 +128,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/user/me/rooms/60d6e79018c76410a497d78a/devices/60db3b292acba211cc6e9fb9",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/user/me/rooms/60d6e79018c76410a497d78a/devices/60db3b292acba211cc6e9fb9",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -132,12 +158,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/user/me/rooms/60f44705e18ac22760d21692/devices/60f98fa6226563189c3eb313/turn-on",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/user/me/rooms/60f44705e18ac22760d21692/devices/60f98fa6226563189c3eb313/turn-on",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -165,12 +189,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/user/me/rooms/60f44705e18ac22760d21692/devices/60f98fa6226563189c3eb313/turn-off",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/user/me/rooms/60f44705e18ac22760d21692/devices/60f98fa6226563189c3eb313/turn-off",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -203,12 +225,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/user/me/rooms/60d6e79018c76410a497d78a/members",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/user/me/rooms/60d6e79018c76410a497d78a/members",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -236,12 +256,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/user/me/rooms",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/user/me/rooms",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -265,12 +283,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/user/me/rooms/60db392763f4952704e720ed",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/user/me/rooms/60db392763f4952704e720ed",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -278,6 +294,66 @@
 										"me",
 										"rooms",
 										"60db392763f4952704e720ed"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "cameras",
+					"item": [
+						{
+							"name": "cameras",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{HOST_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{DOMAIN}}/api/v1/user/me/cameras",
+									"host": [
+										"{{DOMAIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"me",
+										"cameras"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "camera",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{HOST_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{DOMAIN}}/api/v1/user/me/cameras/60fd84774deb0c26e0a7b9d3",
+									"host": [
+										"{{DOMAIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"me",
+										"cameras",
+										"60fd84774deb0c26e0a7b9d3"
 									]
 								}
 							},
@@ -300,12 +376,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/user/register",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/user/register",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -331,12 +405,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/user/login",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/user/login",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -359,24 +431,16 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/user/me/logout?x-access-token={{TOKEN}}",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/user/me/logout",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
 								"user",
 								"me",
 								"logout"
-							],
-							"query": [
-								{
-									"key": "x-access-token",
-									"value": "{{TOKEN}}"
-								}
 							]
 						}
 					},
@@ -394,12 +458,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/user/me/logout-all",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/user/me/logout-all",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -423,12 +485,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/user/me",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/user/me",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -454,12 +514,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/user/forgot-password",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/user/forgot-password",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -476,12 +534,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/user/reset-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVmZjBmODg4MTFhMGM5OGVhMDAzMyIsImlhdCI6MTYyNTQxNjE3NiwiZXhwIjoxNjI1NDE5Nzc2fQ.Pmss28I7ocp0WFEp9658Bl3Bzgm-zO53-yjQaXLWrgY",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/user/reset-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVmZjBmODg4MTFhMGM5OGVhMDAzMyIsImlhdCI6MTYyNTQxNjE3NiwiZXhwIjoxNjI1NDE5Nzc2fQ.Pmss28I7ocp0WFEp9658Bl3Bzgm-zO53-yjQaXLWrgY",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -508,12 +564,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/user/reset-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVmZjBmODg4MTFhMGM5OGVhMDAzMyIsImlhdCI6MTYyNTQxNjE3NiwiZXhwIjoxNjI1NDE5Nzc2fQ.Pmss28I7ocp0WFEp9658Bl3Bzgm-zO53-yjQaXLWrgY",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/user/reset-password/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDVmZjBmODg4MTFhMGM5OGVhMDAzMyIsImlhdCI6MTYyNTQxNjE3NiwiZXhwIjoxNjI1NDE5Nzc2fQ.Pmss28I7ocp0WFEp9658Bl3Bzgm-zO53-yjQaXLWrgY",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -529,14 +583,27 @@
 					"name": "update",
 					"request": {
 						"method": "PATCH",
-						"header": [],
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "{{TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Nhàn Vân Cute\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/user/me",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/user/me",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -568,12 +635,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/user/me/email/new",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/user/me/email/new",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -598,12 +663,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/user/email/new/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZWFlYzM1YTg1N2I5MzM1NDRjNWExZiIsImVtYWlsIjoiYmxhY2tqb2tlcjA3MDhAZ21haWwuY29tIiwiaWF0IjoxNjI2MDIwNTk0LCJleHAiOjE2MjYwMjQxOTR9.KjjSNrjDShEmNvv8NziRFqZcJtjVYFdtticyfNtEILI",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/user/email/new/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZWFlYzM1YTg1N2I5MzM1NDRjNWExZiIsImVtYWlsIjoiYmxhY2tqb2tlcjA3MDhAZ21haWwuY29tIiwiaWF0IjoxNjI2MDIwNTk0LCJleHAiOjE2MjYwMjQxOTR9.KjjSNrjDShEmNvv8NziRFqZcJtjVYFdtticyfNtEILI",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -628,12 +691,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/user/me/email",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/user/me/email",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -657,12 +718,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/user/email/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZWFlYzM1YTg1N2I5MzM1NDRjNWExZiIsImlhdCI6MTYyNjAxOTkyOSwiZXhwIjoxNjI2MDIzNTI5fQ.3rVw5QX8LWpZEtg__0SVpkGgPnSETAEQUSPoqs7CDQc",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/user/email/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZWFlYzM1YTg1N2I5MzM1NDRjNWExZiIsImlhdCI6MTYyNjAxOTkyOSwiZXhwIjoxNjI2MDIzNTI5fQ.3rVw5QX8LWpZEtg__0SVpkGgPnSETAEQUSPoqs7CDQc",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -696,12 +755,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/user/email/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZWFlYzM1YTg1N2I5MzM1NDRjNWExZiIsImlhdCI6MTYyNjAxOTkyOSwiZXhwIjoxNjI2MDIzNTI5fQ.3rVw5QX8LWpZEtg__0SVpkGgPnSETAEQUSPoqs7CDQc",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/user/email/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZWFlYzM1YTg1N2I5MzM1NDRjNWExZiIsImlhdCI6MTYyNjAxOTkyOSwiZXhwIjoxNjI2MDIzNTI5fQ.3rVw5QX8LWpZEtg__0SVpkGgPnSETAEQUSPoqs7CDQc",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -736,12 +793,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60f44705e18ac22760d21692/devices",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/home/rooms/60f44705e18ac22760d21692/devices",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -775,12 +830,10 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60f44705e18ac22760d21692/devices",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/home/rooms/60f44705e18ac22760d21692/devices",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -805,12 +858,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60f44705e18ac22760d21692/devices/60f98fa6226563189c3eb313/turn-on",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/home/rooms/60f44705e18ac22760d21692/devices/60f98fa6226563189c3eb313/turn-on",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -837,12 +888,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60f44705e18ac22760d21692/devices/60f98fa6226563189c3eb313/turn-off",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/home/rooms/60f44705e18ac22760d21692/devices/60f98fa6226563189c3eb313/turn-off",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -869,12 +918,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60d6e79018c76410a497d78a/devices/60d6ed2c8c3f1c28e4caa74bs",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/home/rooms/60d6e79018c76410a497d78a/devices/60d6ed2c8c3f1c28e4caa74bs",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -900,12 +947,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60d6e79018c76410a497d78a/devices",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/home/rooms/60d6e79018c76410a497d78a/devices",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -935,12 +980,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60f44705e18ac22760d21692/members",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/home/rooms/60f44705e18ac22760d21692/members",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -974,12 +1017,10 @@
 											}
 										},
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60f44705e18ac22760d21692/members",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/home/rooms/60f44705e18ac22760d21692/members",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -1004,12 +1045,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60b8b032f5b25823f891a2da/members/block/60b0bad58d28123b10b6ca91",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/home/rooms/60b8b032f5b25823f891a2da/members/block/60b0bad58d28123b10b6ca91",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -1036,12 +1075,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60b743f83f8a28006c789c75/members/block",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/home/rooms/60b743f83f8a28006c789c75/members/block",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -1067,12 +1104,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60b83f8eded6442fc8f88ca7/members/active/60b0bad58d28123b10b6ca91",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/home/rooms/60b83f8eded6442fc8f88ca7/members/active/60b0bad58d28123b10b6ca91",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -1099,12 +1134,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60b8b032f5b25823f891a2da/members/active",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/home/rooms/60b8b032f5b25823f891a2da/members/active",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -1130,12 +1163,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60d6e79018c76410a497d78a/members/60d82bb4b09e121f3c1531a5",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/home/rooms/60d6e79018c76410a497d78a/members/60d82bb4b09e121f3c1531a5",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -1161,12 +1192,10 @@
 											}
 										],
 										"url": {
-											"raw": "http://localhost:3000/api/v1/home/rooms/60d6e79018c76410a497d78a/members",
-											"protocol": "http",
+											"raw": "{{DOMAIN}}/api/v1/home/rooms/60d6e79018c76410a497d78a/members",
 											"host": [
-												"localhost"
+												"{{DOMAIN}}"
 											],
-											"port": "3000",
 											"path": [
 												"api",
 												"v1",
@@ -1193,12 +1222,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/rooms",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/rooms",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1221,12 +1248,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/rooms/60d6e79018c76410a497d78a",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/rooms/60d6e79018c76410a497d78a",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1259,12 +1284,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/rooms",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/rooms",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1296,12 +1319,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/rooms/60d5ff8288811a0c98ea0055",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/rooms/60d5ff8288811a0c98ea0055",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1325,12 +1346,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/rooms/block/60af6cedb11ee71c5cebccd3",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/rooms/block/60af6cedb11ee71c5cebccd3",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1355,12 +1374,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/rooms/active/60af6cedb11ee71c5cebccd3",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/rooms/active/60af6cedb11ee71c5cebccd3",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1385,12 +1402,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/rooms/60b0a15c073d0802c4b6dbf0",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/rooms/60b0a15c073d0802c4b6dbf0",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1414,12 +1429,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/rooms",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/rooms",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1447,12 +1460,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/devices",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/devices",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1475,18 +1486,16 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/devices/60d6e5ed72cc46239c5d37f8",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/devices/60f98fa6226563189c3eb313",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
 										"home",
 										"devices",
-										"60d6e5ed72cc46239c5d37f8"
+										"60f98fa6226563189c3eb313"
 									]
 								}
 							},
@@ -1505,7 +1514,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"fire-1\",\r\n    \"topic\": \"topic-fire-1\"\r\n}",
+									"raw": "{\r\n    \"name\": \"fire-1\",\r\n    \"topic\": \"topic-fire\",\r\n    \"type\": \"temperature\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1513,12 +1522,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/devices",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/devices",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1536,13 +1543,13 @@
 								"header": [
 									{
 										"key": "x-access-token",
-										"value": "{{HOST_TOKEN}}",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZDg0NmZhYTAyMjUzMWM1NDIxYmI5OSIsImlhdCI6MTYyNzIyODA4NSwiZXhwIjoxNjI3MzE0NDg1fQ.AT09Fehm0YPWznOBTh6s0tXdzhBNaGxVC9JdW7reLjw",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"fire\",\r\n    \"topic\": \"fire\",\r\n    \"description\": \"Fire sensor\"\r\n}",
+									"raw": "{\r\n     \"name\": \"name\",\r\n    \"topic\": \"topic\",\r\n    \"type\":\"type\",\r\n    \"description\": \"description\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1550,18 +1557,21 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/devices/60f98fa6226563189c3eb313",
+									"raw": "http://192.168.101.212:8080/api/v1/home/devices/60fd85f789026f0d342f752e",
 									"protocol": "http",
 									"host": [
-										"localhost"
+										"192",
+										"168",
+										"101",
+										"212"
 									],
-									"port": "3000",
+									"port": "8080",
 									"path": [
 										"api",
 										"v1",
 										"home",
 										"devices",
-										"60f98fa6226563189c3eb313"
+										"60fd85f789026f0d342f752e"
 									]
 								}
 							},
@@ -1579,12 +1589,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/devices/block/60d6dbf64363a60f6080ee38",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/devices/block/60d6dbf64363a60f6080ee38",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1609,12 +1617,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/devices/block",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/devices/block",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1638,12 +1644,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/devices/active/60d6dbf64363a60f6080ee38",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/devices/active/60d6dbf64363a60f6080ee38",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1668,12 +1672,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/devices/active",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/devices/active",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1697,12 +1699,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/devices/60d6e5ed72cc46239c5d37f8",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/devices/60d6e5ed72cc46239c5d37f8",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1726,17 +1726,307 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/devices",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/devices",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
 										"home",
 										"devices"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "cameras",
+					"item": [
+						{
+							"name": "cameras",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{HOST_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{DOMAIN}}/api/v1/home/cameras",
+									"host": [
+										"{{DOMAIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"home",
+										"cameras"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "camera",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{HOST_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{DOMAIN}}/api/v1/home/cameras/60fd84774deb0c26e0a7b9d3",
+									"host": [
+										"{{DOMAIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"home",
+										"cameras",
+										"60fd84774deb0c26e0a7b9d3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{HOST_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"camera-1\",\r\n    \"ip\": \"192.168.0.1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{DOMAIN}}/api/v1/home/cameras",
+									"host": [
+										"{{DOMAIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"home",
+										"cameras"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{HOST_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"description\": \"Camera 1 is near the door\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{DOMAIN}}/api/v1/home/cameras/60fd5b65b2f2be3688c03b4b",
+									"host": [
+										"{{DOMAIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"home",
+										"cameras",
+										"60fd5b65b2f2be3688c03b4b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "block",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{HOST_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{DOMAIN}}/api/v1/home/cameras/block/60fd5b65b2f2be3688c03b4b",
+									"host": [
+										"{{DOMAIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"home",
+										"cameras",
+										"block",
+										"60fd5b65b2f2be3688c03b4b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "block-all",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{HOST_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{DOMAIN}}/api/v1/home/cameras/block",
+									"host": [
+										"{{DOMAIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"home",
+										"cameras",
+										"block"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "active",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{HOST_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{DOMAIN}}/api/v1/home/cameras/active/60fd5b65b2f2be3688c03b4b",
+									"host": [
+										"{{DOMAIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"home",
+										"cameras",
+										"active",
+										"60fd5b65b2f2be3688c03b4b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "active-all",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{HOST_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{DOMAIN}}/api/v1/home/cameras/active",
+									"host": [
+										"{{DOMAIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"home",
+										"cameras",
+										"active"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "remove",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{HOST_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{DOMAIN}}/api/v1/home/cameras/60fd5b65b2f2be3688c03b4b",
+									"host": [
+										"{{DOMAIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"home",
+										"cameras",
+										"60fd5b65b2f2be3688c03b4b"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "remove-all",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{HOST_TOKEN}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{DOMAIN}}/api/v1/home/cameras",
+									"host": [
+										"{{DOMAIN}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"home",
+										"cameras"
 									]
 								}
 							},
@@ -1759,12 +2049,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/members",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/members",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1787,12 +2075,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/members/60b0bad58d28123b10b6ca91",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/members/60b0bad58d28123b10b6ca91",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1816,12 +2102,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/members/block",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/members/block",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1845,12 +2129,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/home/members/active",
-									"protocol": "http",
+									"raw": "{{DOMAIN}}/api/v1/home/members/active",
 									"host": [
-										"localhost"
+										"{{DOMAIN}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -1876,12 +2158,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/home",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/home",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -1912,12 +2192,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/home",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/home",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -1944,12 +2222,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/users",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/users",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -1971,12 +2247,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/users/60d82bb4b09e121f3c1531a5",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/users/60d82bb4b09e121f3c1531a5",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2008,12 +2282,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/users",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/users",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2044,12 +2316,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/users/60af5cb087814822d06d3615/role/change",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/users/60af5cb087814822d06d3615/role/change",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2074,12 +2344,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/users/60acb0ad305ef139e89e2adb/role/reset",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/users/60acb0ad305ef139e89e2adb/role/reset",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2104,12 +2372,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/users/60acb0ad305ef139e89e2adb/home/reset",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/users/60acb0ad305ef139e89e2adb/home/reset",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2128,12 +2394,10 @@
 						"method": "PATCH",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/users/roles/update-all",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/users/roles/update-all",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2157,12 +2421,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/users/block/60acb0ad305ef139e89e2adb",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/users/block/60acb0ad305ef139e89e2adb",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2186,12 +2448,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/users/active/60acb0ad305ef139e89e2adb",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/users/active/60acb0ad305ef139e89e2adb",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2215,12 +2475,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/users/60b6fac6e56a4b21cc95175d",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/users/60b6fac6e56a4b21cc95175d",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2243,12 +2501,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/users",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/users",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2275,12 +2531,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/homes",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/homes",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2302,12 +2556,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/homes/60b78229d5f57827ac8a9cb1",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/homes/60b78229d5f57827ac8a9cb1",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2339,12 +2591,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/homes",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/homes",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2366,12 +2616,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/homes/block/60ae14e612fe114810cdffa8",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/homes/block/60ae14e612fe114810cdffa8",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2395,12 +2643,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/homes/active/60ae14e612fe114810cdffa8",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/homes/active/60ae14e612fe114810cdffa8",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2418,12 +2664,10 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/homes/id",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/homes/id",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2446,12 +2690,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/homes/60b6ff8e6298632eec71da56",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/homes/60b6ff8e6298632eec71da56",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2474,12 +2716,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/homes",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/homes",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2506,12 +2746,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/roles",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/roles",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2533,12 +2771,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/roles/60d13bf5edf28f08acad31f7",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/roles/60d13bf5edf28f08acad31f7",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2564,12 +2800,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/roles",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/roles",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2594,12 +2828,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/roles/60ac6f27bcff8350b0eea809",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/roles/60ac6f27bcff8350b0eea809",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2616,12 +2848,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/roles/60ac6f27bcff8350b0eea809",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/roles/60ac6f27bcff8350b0eea809",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2638,12 +2868,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/roles",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/roles",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2673,12 +2901,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/sub",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/sub",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2703,12 +2929,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/pub",
-							"protocol": "http",
+							"raw": "{{DOMAIN}}/api/v1/pub",
 							"host": [
-								"localhost"
+								"{{DOMAIN}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
