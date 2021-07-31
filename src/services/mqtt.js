@@ -1,7 +1,13 @@
 const mqtt = require('mqtt')
 const config = require('../config')
+const DevicesTypes = require('../constants/deviceTypes')
+const Time = require('../utils/time')
+const Mailer = require('../utils/mail')
 
 const Device = require('../models/device.model')
+
+const gasWarning = require('../utils/templates/gasWarning')
+const temperatureWarning = require('../utils/templates/temperatureWarning')
 
 class MqttHandler {
   constructor() {
@@ -35,12 +41,68 @@ class MqttHandler {
     // When a message arrives, console.log it
     this.mqttClient.on('message', async function (topic, message) {
       console.log("Subscriber on ", topic, "Channel: ", message.toString())
-      await Device
+      const device = await Device
         .findOneAndUpdate(
           { topic: topic },
           { $push: { data: parseInt(message) } },
           { new: true }
         )
+
+      if (device) {
+        switch (device?.type) {
+          case DevicesTypes.GAS:
+            if (parseInt(message) > 300) {
+              if (Time.lt10Minutes(device?.latestGasWarnedAt?.toString()))
+                break
+
+              const emails = await Mailer.All()
+              console.log('emails', emails)
+              if (emails?.length) {
+                for (let email of emails) {
+                  Mailer.sendMail(
+                    '[Gas Warning] High gas concentration',
+                    email,
+                    gasWarning.gasWarning(message)
+                  )
+                }
+                device.latestGasWarnedAt = new Date()
+                await device.save()
+              }
+
+            }
+
+            break
+
+          case DevicesTypes.TEMPERATURE:
+            if (parseInt(message) > 300) {
+              if (Time.lt10Minutes(device?.latestTemperatureWarnedAt?.toString()))
+                break
+
+              const emails = await Mailer.All()
+              if (emails.length) {
+                for (let email of emails) {
+                  Mailer.sendMail(
+                    '[Temperature Warning] The temperature index is rising',
+                    email,
+                    temperatureWarning.temperatureWarning(message)
+                  )
+                }
+                device.latestTemperatureWarnedAt = new Date()
+                await device.save()
+              }
+
+            }
+
+            break
+
+          case DevicesTypes.AIR:
+
+            break
+
+          default:
+
+        }
+      }
     });
   }
 

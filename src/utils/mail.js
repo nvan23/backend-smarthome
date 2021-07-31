@@ -1,6 +1,8 @@
 const nodemailer = require('nodemailer')
 const config = require('../config')
 
+const User = require("../models/user.model")
+
 exports.sendMail = (title, to, html) => {
   let transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -28,5 +30,10 @@ exports.sendMail = (title, to, html) => {
 
     }
   });
+}
 
+exports.All = async () => {
+  const getAllMails = await User.find().select('email')
+  const mails = getAllMails.map(m => m?.email)
+  return mails
 }

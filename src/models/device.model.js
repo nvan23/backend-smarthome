@@ -43,6 +43,16 @@ const deviceSchema = mongoose.Schema({
     default: false,
   },
   data: [],
+  latestGasWarnedAt: {
+    type: Date,
+  },
+  latestTemperatureWarnedAt: {
+    type: Date,
+  },
+  autoRun: {
+    type: Boolean,
+    default: false,
+  }
 }, { timestamps: true })
 
 const Device = mongoose.model('Device', deviceSchema)
