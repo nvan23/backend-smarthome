@@ -4,6 +4,7 @@ const config = require('../../config')
 
 const Role = require('../../models/role.model')
 const User = require("../../models/user.model")
+const Room = require("../../models/room.model")
 
 const checker = require('../../utils/checker')
 
@@ -112,11 +113,20 @@ exports.updateAllRolesOfAllUsers = (req, res) => {
     })
 }
 
-exports.deleteAllUsers = (req, res) => {
-  User
-    .deleteMany()
-    .then(data => res.status(200).json(data))
-    .catch(error => res.status(400).json(error))
+exports.deleteAllUsers = async (req, res) => {
+  try {
+    const role = await Role.findOne({ key: config.roles.admin })
+    if (!role) throw { error: "Role not found" }
+
+    const deletedUsers = await User
+      .deleteMany({ roles: { $nin: role.id } })
+
+    await Room.updateMany({}, { members: [] })
+
+    res.status(200).json(deletedUsers)
+  } catch (error) {
+    res.status(400).json(error)
+  }
 }
 
 exports.delete = (req, res) => {
@@ -145,4 +155,3 @@ exports.block = (status) => {
     }
   }
 }
-
