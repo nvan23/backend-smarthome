@@ -33,9 +33,9 @@ class MqttHandler {
 
   mqttListener () {
     // When a message arrives, console.log it
-    this.mqttClient.on('message', function (topic, message) {
+    this.mqttClient.on('message', async function (topic, message) {
       console.log("Subscriber on ", topic, "Channel: ", message.toString())
-      Device
+      await Device
         .findOneAndUpdate(
           { topic: topic },
           { $push: { data: parseInt(message) } },
