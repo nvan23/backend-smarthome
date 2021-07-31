@@ -18,7 +18,7 @@ const deviceSchema = mongoose.Schema({
   },
   roomId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Room',
     default: null
   },
   type: {

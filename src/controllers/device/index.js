@@ -125,12 +125,14 @@ exports.block = (status) => {
 
 exports.update = async (req, res) => {
   try {
+    const deviceId = req.params?.id
     const name = req.body?.name?.trim()
     const topic = req.body?.topic?.trim()
     const type = req.body?.type?.trim()
+    const roomId = req.body?.roomId?.trim()
 
-    if (!checker.isObjectId(req.params.id))
-      throw { error: "Device not found" }
+    if (!checker.isObjectId(deviceId))
+      throw { error: "Input error - Device not found" }
 
     const isDeviceNameExist = await Device.find({ name: name })
     if (isDeviceNameExist.length)
@@ -140,21 +142,56 @@ exports.update = async (req, res) => {
     if (isDeviceTopicExist.length)
       throw { error: "Topic channel already exists." }
 
-    if (!devicesTypes.includes(type))
+    if (type && !devicesTypes.includes(type))
       throw { error: "Input error - Type not found" }
 
-    const device = await Device.findByIdAndUpdate(
-      req.params.id,
+    const device = await Device.findById(deviceId)
+    if (!device) throw { error: "Device not found" }
+
+    if (!checker.isObjectId(roomId))
+      throw { error: "Input error - Room not found" }
+
+    const room = await Room.findById(roomId)
+    if (!room) throw { error: "Room not found" }
+
+    const updatedDevice = await Device.findByIdAndUpdate(
+      deviceId,
       req.body,
       { new: true }
     )
 
-    if (!device)
+    if (!updatedDevice)
       throw { error: "Cannot update this device at the home" }
+
+    if (device?.roomId &&
+      device?.roomId.toString() !== roomId &&
+      !room?.devices.includes(deviceId)
+    ) {
+      await Room
+        .findByIdAndUpdate(
+          device?.roomId.toString(),
+          { $pull: { devices: deviceId } },
+          { new: true }
+        )
+
+      await Room
+        .findByIdAndUpdate(
+          roomId,
+          { $push: { devices: deviceId } },
+          { new: true }
+        )
+    } else if (!device?.roomId) {
+      await Room
+        .findByIdAndUpdate(
+          roomId,
+          { $push: { devices: deviceId } },
+          { new: true }
+        )
+    }
 
     mqttClient.subscribe(topic || device.topic)
 
-    res.status(200).json(device)
+    res.status(200).json(updatedDevice)
   } catch (error) {
     res.status(400).json(error)
   }
