@@ -197,6 +197,63 @@ exports.update = async (req, res) => {
   }
 }
 
+exports.setupAutoRun = async (req, res) => {
+  try {
+    const deviceId = req.params.id
+    const sensorId = req.body?.sensorId?.trim()
+
+    if (!checker.isObjectId(deviceId))
+      throw { error: "Invalid input" }
+
+    const device = await Device.findById(deviceId)
+    if (!device)
+      throw { error: "Device not found" }
+
+    if (!sensorId)
+      throw { error: "Invalid input - Empty input" }
+
+    const sensor = await Device.findById(sensorId)
+    if (!sensor)
+      throw { error: "Sensor not found" }
+
+    device.autoRun.baseOn = sensorId
+    await device.save()
+
+    res.status(200).json(device)
+  } catch (error) {
+    return res.status(400).json(error)
+  }
+}
+
+exports.autoRun = (state) => {
+  return async function (req, res) {
+    try {
+      const deviceId = req.params.id
+
+      if (!checker.isObjectId(deviceId))
+        throw { error: "Invalid input" }
+
+      const device = await Device.findById(deviceId)
+      if (!device)
+        throw { error: "Device not found" }
+
+      if (!device.autoRun.baseOn)
+        throw { error: "No sensor to get value" }
+
+      device.autoRun.status = state
+      await device.save()
+
+      if (!device)
+        throw { error: "Device not found" }
+
+      res.status(200).json(device)
+    } catch (error) {
+      return res.status(400).json(error)
+    }
+  }
+}
+
+
 exports.delete = async (req, res) => {
   try {
     if (!checker.isObjectId(req.params.id))

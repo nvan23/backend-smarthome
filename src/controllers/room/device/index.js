@@ -24,6 +24,20 @@ exports.getAllDevices = async (req, res) => {
   }
 }
 
+exports.getAllDevicesWithType = async (req, res) => {
+  try {
+    const type = req.params?.type.trim()
+
+    Device
+      .find({ roomId: req.room.id, type: type })
+      .sort({ createdAt: 'desc' })
+      .then(data => res.status(200).json(data))
+      .catch(error => res.status(400).json(error))
+  } catch (error) {
+    res.status(400).json(error)
+  }
+}
+
 exports.addDevice = async (req, res) => {
   try {
     if (!checker.isObjectId(req.room.id))
