@@ -42,12 +42,22 @@ const deviceSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  data: [],
+  data: [{
+    value: String,
+    createdAt: String
+  }],
   latestGasWarnedAt: [],
   latestTemperatureWarnedAt: [],
   autoRun: {
-    type: Boolean,
-    default: false,
+    baseOn: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Device',
+      default: null
+    },
+    status: {
+      type: Boolean,
+      default: false
+    }
   }
 }, { timestamps: true })
 
