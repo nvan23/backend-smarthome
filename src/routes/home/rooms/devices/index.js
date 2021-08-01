@@ -7,6 +7,9 @@ const router = express.Router()
 // get all device of a room
 router.get('/', deviceController.getAllDevices)
 
+// get all devices of the home with type
+router.get('/search/type/:type', deviceController.getAllDevicesWithType)
+
 // add an device to room
 router.put('/', deviceController.addDevice)
 

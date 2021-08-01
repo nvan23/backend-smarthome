@@ -14,6 +14,15 @@ router.get('/:id', deviceController.getDevice)
 // update information of a device
 router.put('/:id', deviceController.update)
 
+// enable auto run on a device
+router.patch('/auto-run/:id/setup', deviceController.setupAutoRun)
+
+// enable auto run on a device
+router.patch('/auto-run/:id/enable', deviceController.autoRun(true))
+
+// disable auto run on a device
+router.patch('/auto-run/:id/disable', deviceController.autoRun(false))
+
 // block grantable of all devices
 router.patch('/block', deviceController.blockAllDevices(true))
 
