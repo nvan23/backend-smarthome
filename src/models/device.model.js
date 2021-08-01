@@ -43,12 +43,8 @@ const deviceSchema = mongoose.Schema({
     default: false,
   },
   data: [],
-  latestGasWarnedAt: {
-    type: Date,
-  },
-  latestTemperatureWarnedAt: {
-    type: Date,
-  },
+  latestGasWarnedAt: [],
+  latestTemperatureWarnedAt: [],
   autoRun: {
     type: Boolean,
     default: false,
