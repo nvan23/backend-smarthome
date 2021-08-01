@@ -4,6 +4,7 @@ const Time = require('../utils/time')
 const Mailer = require('../utils/mail')
 
 const Device = require('../models/device.model')
+const Room = require('../models/room.model')
 
 const gasWarning = require('../utils/templates/gasWarning')
 const temperatureWarning = require('../utils/templates/temperatureWarning')
@@ -66,11 +67,7 @@ exports.mqtt = async (topic, message) => {
 
       break
 
-    case DevicesTypes.AIR:
-
-      break
-
     default:
-
+      return device
   }
 }

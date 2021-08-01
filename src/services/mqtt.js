@@ -1,8 +1,10 @@
 const mqtt = require('mqtt')
 const config = require('../config')
-const Device = require('../models/device.model')
-
+const DevicesTypes = require('../constants/deviceTypes')
 const AutoRunner = require('../utils/autoRun')
+
+const Device = require('../models/device.model')
+const Room = require('../models/room.model')
 
 class MqttHandler {
   constructor() {
@@ -36,7 +38,34 @@ class MqttHandler {
     // When a message arrives, console.log it
     this.mqttClient.on('message', async (topic, message) => {
       console.log("Subscriber on ", topic, "Channel: ", message.toString())
-      await AutoRunner.mqtt(topic, message)
+      const device = await AutoRunner.mqtt(topic, message)
+
+
+      if (device?.type === DevicesTypes.LIGHT) {
+        if (parseInt(message) > 10 &&
+          parseInt(message) <= 100) return
+
+        const getAllLamps = await Device
+          .find({
+            roomId: device.roomId,
+            type: DevicesTypes.IO,
+          })
+          .sort({ createdAt: 'desc' })
+
+        if (!getAllLamps && !getAllLamps.length) return
+
+        const lampTopics = getAllLamps.map(l => l?.topic.toString())
+
+        if (parseInt(message) > 100) {
+          return this.publish(lampTopics[0], 0)
+        }
+
+        if (parseInt(message) <= 10) {
+          return this.publish(lampTopics[0], 1)
+        }
+
+      }
+
     });
   }
 
