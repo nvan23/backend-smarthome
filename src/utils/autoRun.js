@@ -16,7 +16,7 @@ exports.mqtt = async (topic, message) => {
       { $push: { data: parseInt(message) } },
       { new: true }
     )
-  console.log(topic, message, device)
+
   if (!device && !device?.type) return
 
   switch (device?.type) {
