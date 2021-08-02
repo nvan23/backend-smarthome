@@ -68,6 +68,9 @@ exports.mqtt = async (topic, message) => {
       break
 
     default:
-      return device
+      break
   }
+
+  return device
+
 }

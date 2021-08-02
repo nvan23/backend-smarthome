@@ -40,7 +40,6 @@ class MqttHandler {
       console.log("Subscriber on ", topic, "Channel: ", message.toString())
       const device = await AutoRunner.mqtt(topic, message)
 
-
       if (device?.type === DevicesTypes.LIGHT) {
         if (parseInt(message) > 10 &&
           parseInt(message) <= 100) return
@@ -57,11 +56,11 @@ class MqttHandler {
         const lampTopics = getAllLamps.map(l => l?.topic.toString())
 
         if (parseInt(message) > 100) {
-          return this.publish(lampTopics[0], 0)
+          this.publish(lampTopics[0], '0')
         }
 
         if (parseInt(message) <= 10) {
-          return this.publish(lampTopics[0], 1)
+          this.publish(lampTopics[0], '1')
         }
 
       }
@@ -96,7 +95,7 @@ class MqttHandler {
         message,
         {
           retain: false,
-          qos: 2,
+          qos: 0,
         }
       )
     console.log("Publisher on ", topic, " Channel: ", message)
