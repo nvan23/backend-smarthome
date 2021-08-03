@@ -56,11 +56,23 @@ class MqttHandler {
         const lampTopics = getAllLamps.map(l => l?.topic.toString())
 
         if (parseInt(message) > 100) {
-          this.publish(lampTopics[0], '0')
+          if (device?.isLive) {
+            this.publish(lampTopics[0], '0')
+            await Device.findByIdAndUpdate(
+              device.id,
+              { isLive: false }
+            )
+          }
         }
 
         if (parseInt(message) <= 10) {
-          this.publish(lampTopics[0], '1')
+          if (!device?.isLive) {
+            this.publish(lampTopics[0], '1')
+            await Device.findByIdAndUpdate(
+              device.id,
+              { isLive: true }
+            )
+          }
         }
 
       }

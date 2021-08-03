@@ -14,7 +14,14 @@ exports.mqtt = async (topic, message) => {
   const device = await Device
     .findOneAndUpdate(
       { topic: topic },
-      { $push: { data: parseInt(message) } },
+      {
+        $push: {
+          data: {
+            value: parseInt(message),
+            createAt: (new Date()).toString()
+          }
+        }
+      },
       { new: true }
     )
 
