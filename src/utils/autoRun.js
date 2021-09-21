@@ -25,7 +25,7 @@ exports.mqtt = async (topic, message) => {
       { new: true }
     )
 
-  if (!device && !device?.type) return
+  if (!device) return
 
   // switch (device?.type) {
   //   case DevicesTypes.GAS:

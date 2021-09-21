@@ -38,7 +38,22 @@ class MqttHandler {
     // When a message arrives, console.log it
     this.mqttClient.on('message', async (topic, message) => {
       console.log("Subscriber on ", topic, "Channel: ", message.toString())
-      const device = await AutoRunner.mqtt(topic, message)
+
+      // const device = await AutoRunner.mqtt(topic, message)
+
+      const device = await Device
+        .findOneAndUpdate(
+          { topic: topic },
+          {
+            $push: {
+              data: {
+                value: parseInt(message),
+                createAt: (new Date()).toString()
+              }
+            }
+          },
+          { new: true }
+        )
 
       if (device?.type === DevicesTypes.LIGHT) {
         if (parseInt(message) > 10 &&
