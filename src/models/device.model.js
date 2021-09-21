@@ -43,7 +43,7 @@ const deviceSchema = mongoose.Schema({
     default: false,
   },
   data: [{
-    value: String,
+    value: Number,
     createdAt: String
   }],
   latestGasWarnedAt: [],
