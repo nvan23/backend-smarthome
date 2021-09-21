@@ -27,56 +27,56 @@ exports.mqtt = async (topic, message) => {
 
   if (!device && !device?.type) return
 
-  switch (device?.type) {
-    case DevicesTypes.GAS:
-      if (parseInt(message) > 300) {
-        if (device?.latestGasWarnedAt?.length &&
-          Time.lt10Minutes(Array.last(device?.latestGasWarnedAt).toString()))
-          break
+  // switch (device?.type) {
+  //   case DevicesTypes.GAS:
+  //     if (parseInt(message) > 300) {
+  //       if (device?.latestGasWarnedAt?.length &&
+  //         Time.lt10Minutes(Array.last(device?.latestGasWarnedAt).toString()))
+  //         break
 
-        const emails = await Mailer.All()
-        if (emails?.length) {
-          for (let email of emails) {
-            Mailer.sendMail(
-              '[Gas Warning] High gas concentration',
-              email,
-              gasWarning.gasWarning(message)
-            )
-          }
-          device.latestGasWarnedAt.push((new Date()).toString())
-          await device.save()
-        }
+  //       const emails = await Mailer.All()
+  //       if (emails?.length) {
+  //         for (let email of emails) {
+  //           Mailer.sendMail(
+  //             '[Gas Warning] High gas concentration',
+  //             email,
+  //             gasWarning.gasWarning(message)
+  //           )
+  //         }
+  //         device.latestGasWarnedAt.push((new Date()).toString())
+  //         await device.save()
+  //       }
 
-      }
+  //     }
 
-      break
+  //     break
 
-    case DevicesTypes.TEMPERATURE:
-      if (parseInt(message) > 100) {
-        if (device?.latestTemperatureWarnedAt?.length &&
-          Time.lt10Minutes(Array.last(device?.latestTemperatureWarnedAt).toString()))
-          break
+  //   case DevicesTypes.TEMPERATURE:
+  //     if (parseInt(message) > 100) {
+  //       if (device?.latestTemperatureWarnedAt?.length &&
+  //         Time.lt10Minutes(Array.last(device?.latestTemperatureWarnedAt).toString()))
+  //         break
 
-        const emails = await Mailer.All()
-        if (emails.length) {
-          for (let email of emails) {
-            Mailer.sendMail(
-              '[Temperature Warning] The temperature index is rising',
-              email,
-              temperatureWarning.temperatureWarning(message)
-            )
-          }
-          device.latestTemperatureWarnedAt.push((new Date()).toString())
-          await device.save()
-        }
+  //       const emails = await Mailer.All()
+  //       if (emails.length) {
+  //         for (let email of emails) {
+  //           Mailer.sendMail(
+  //             '[Temperature Warning] The temperature index is rising',
+  //             email,
+  //             temperatureWarning.temperatureWarning(message)
+  //           )
+  //         }
+  //         device.latestTemperatureWarnedAt.push((new Date()).toString())
+  //         await device.save()
+  //       }
 
-      }
+  //     }
 
-      break
+  //     break
 
-    default:
-      break
-  }
+  //   default:
+  //     break
+  // }
 
   return device
 
