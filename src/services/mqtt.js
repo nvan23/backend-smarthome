@@ -56,8 +56,8 @@ class MqttHandler {
         )
 
       if (device?.type === DevicesTypes.LIGHT) {
-        if (parseInt(message) > 10 &&
-          parseInt(message) <= 100) return
+        if (parseFloat(message) > 10 &&
+          parseFloat(message) <= 100) return
 
         const getAllLamps = await Device
           .find({
@@ -70,7 +70,7 @@ class MqttHandler {
 
         const lampTopics = getAllLamps.map(l => l?.topic.toString())
 
-        if (parseInt(message) > 100) {
+        if (parseFloat(message) > 100) {
           if (device?.isLive) {
             this.publish(lampTopics[0], '0')
             await Device.findByIdAndUpdate(
@@ -80,7 +80,7 @@ class MqttHandler {
           }
         }
 
-        if (parseInt(message) <= 10) {
+        if (parseFloat(message) <= 10) {
           if (!device?.isLive) {
             this.publish(lampTopics[0], '1')
             await Device.findByIdAndUpdate(
