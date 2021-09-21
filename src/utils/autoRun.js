@@ -17,7 +17,7 @@ exports.mqtt = async (topic, message) => {
       {
         $push: {
           data: {
-            value: parseFloat(message),
+            value: message.toString(),
             createAt: (new Date()).toString()
           }
         }

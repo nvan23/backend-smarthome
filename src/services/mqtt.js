@@ -47,7 +47,7 @@ class MqttHandler {
           {
             $push: {
               data: {
-                value: parseInt(message),
+                value: parseFloat(message),
                 createAt: (new Date()).toString()
               }
             }
