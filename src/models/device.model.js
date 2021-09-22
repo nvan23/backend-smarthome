@@ -48,6 +48,10 @@ const deviceSchema = mongoose.Schema({
   }],
   latestGasWarnedAt: [],
   latestTemperatureWarnedAt: [],
+  autoRunStatus: {
+    type: Boolean,
+    default: false,
+  },
   autoRun: {
     baseOn: {
       type: mongoose.Schema.Types.ObjectId,

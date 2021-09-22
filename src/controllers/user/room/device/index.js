@@ -67,49 +67,46 @@ exports.getDevice = async (req, res) => {
   }
 }
 
-exports.autoRun = (state) => {
+exports.autoRun = (status) => {
   return async function (req, res) {
     try {
-      const deviceId = req.params.id
-      const roomId = req.room.id
-
-      if (!checker.isObjectId(deviceId))
-        throw { error: "Invalid input" }
-
-      const device = await Device.findById(deviceId)
-
-      if (!device)
-        throw { error: "Device not found" }
-
-      if (device.roomId.toString() !== roomId.toString())
-        throw { error: "User can not use this feature" }
-
-      if (!device.autoRun.baseOn)
-        throw { error: "No sensor to get value" }
-
-      device.autoRun.status = state
-      await device.save()
-
-      if (!device)
-        throw { error: "Device not found" }
-
-      res.status(200).json(device)
-    } catch (error) {
-      return res.status(400).json(error)
-    }
-  }
-}
-
-
-exports.turnOn = (status) => {
-  return async function (req, res) {
-    try {
-
       if (!checker.isObjectId(req?.params?.id))
         throw { error: "Invalid input" }
 
       const device = await Device.findById(req?.params?.id)
       if (!device) throw { error: "Device not found." }
+
+      if (device?.roomId.toString() !== req?.room?.id.toString())
+        throw { error: "This device not in room" }
+
+      if (!device?.isLive) throw { error: "Device is off" }
+
+      mqttClient.publish(`${device?.topic}/auto` || 'unknown', status ? '1' : '0')
+
+      device.autoRunStatus = status
+      await device.save()
+
+      res.status(200).json({
+        deviceId: device?.id,
+        status: device?.autoRunStatus,
+      })
+    } catch (error) {
+      res.status(400).json(error)
+    }
+  }
+}
+
+exports.turnOn = (status) => {
+  return async function (req, res) {
+    try {
+      if (!checker.isObjectId(req?.params?.id))
+        throw { error: "Invalid input" }
+
+      const device = await Device.findById(req?.params?.id)
+      if (!device) throw { error: "Device not found." }
+
+      if (device?.roomId?.toString() !== req?.room?.id?.toString())
+        throw { error: "This device not in room" }
 
       mqttClient.publish(device?.topic || 'unknown', status ? '1' : '0')
 

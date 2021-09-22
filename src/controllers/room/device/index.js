@@ -2,6 +2,7 @@
 
 const Room = require("../../../models/room.model")
 const Device = require("../../../models/device.model")
+const User = require("../../../models/user.model")
 
 const checker = require('../../../utils/checker')
 
@@ -79,11 +80,20 @@ exports.addDevice = async (req, res) => {
 exports.turnOn = (status) => {
   return async function (req, res) {
     try {
+      const user = await User.findById(req.user.id)
+      if (!user) throw { error: "User not found" }
+
+      if (!user?.homeId && !user?.rooms.some(r => r.roomId.toString() === req?.room?.id))
+        throw { error: "Member does not host or Member is not in this room" }
+
       if (!checker.isObjectId(req?.params?.id))
         throw { error: "Invalid input" }
 
       const device = await Device.findById(req?.params?.id)
       if (!device) throw { error: "Device not found." }
+
+      if (device.roomId !== req?.room?.id)
+        throw { error: "This device not in room" }
 
       mqttClient.publish(device?.topic || 'unknown', status ? '1' : '0')
 
