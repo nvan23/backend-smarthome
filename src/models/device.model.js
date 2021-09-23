@@ -1,3 +1,4 @@
+const { Timestamp } = require('bson')
 const mongoose = require('mongoose')
 
 const deviceSchema = mongoose.Schema({
@@ -44,7 +45,7 @@ const deviceSchema = mongoose.Schema({
   },
   data: [{
     value: Number,
-    createdAt: String
+    createdAt: Date
   }],
   latestGasWarnedAt: [],
   latestTemperatureWarnedAt: [],
