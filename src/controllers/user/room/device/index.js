@@ -79,8 +79,6 @@ exports.autoRun = (status) => {
       if (device?.roomId.toString() !== req?.room?.id.toString())
         throw { error: "This device not in room" }
 
-      if (!device?.isLive) throw { error: "Device is off" }
-
       mqttClient.publish(`${device?.topic}/auto` || 'unknown', status ? '1' : '0')
 
       device.autoRunStatus = status
