@@ -12,6 +12,9 @@ router.get('/:id', usersController.getUser)
 // create new an user
 router.post('/', usersController.create)
 
+// update information of user
+router.put('/:id', usersController.update)
+
 // change role of an user
 router.patch('/:id/role/change', usersController.changeRole)
 

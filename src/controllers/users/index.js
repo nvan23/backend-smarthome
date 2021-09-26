@@ -49,6 +49,38 @@ exports.create = async (req, res) => {
   }
 }
 
+exports.update = async (req, res) => {
+  try {
+    if (!Object.keys(req.body).length)
+      throw { error: "Input error - Empty input" }
+
+    const name = req.body?.name
+    const username = req.body?.username
+    const password = req.body?.password
+
+    const user = await User.findById(req.params?.id)
+    if (!user) throw { error: "User not found" }
+
+    if (name && name !== user?.name) {
+      user.name = name
+    }
+
+    if (username && username !== user?.username) {
+      user.username = username
+    }
+
+    if (password) {
+      user.password = password
+    }
+
+    await user.save()
+
+    res.status(200).json(user)
+  } catch (error) {
+    res.status(400).json(error)
+  }
+}
+
 exports.changeRole = async (req, res) => {
   try {
     if (!req.body || !req.body.role || !checker.isObjectId(req.body.role))
