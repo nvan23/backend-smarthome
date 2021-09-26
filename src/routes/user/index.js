@@ -24,6 +24,9 @@ router.post('/me/logout-all', requireAuthentication, userController.logoutAll)
 // View logged in user profile
 router.get('/me', requireAuthentication, userController.me)
 
+// Update password
+router.put('/me/password', requireAuthentication, userController.updatePassword)
+
 // Forgot password
 router.post('/forgot-password', userController.forgotPassword)
 

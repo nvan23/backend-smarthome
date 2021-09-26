@@ -357,6 +357,33 @@ exports.changePassword = (req, res) => {
   }
 }
 
+exports.updatePassword = async (req, res) => {
+  try {
+    if (!Object.keys(req.body))
+      throw { error: "Invalid input - Empty input" }
+
+    const { oldPassword, newPassword } = req.body
+
+    if (!oldPassword || !newPassword)
+      throw { error: 'Old Password and New Password cannot be blank' }
+
+    const user = await User.findById(req.user.id)
+    if (!user) throw { error: 'User not found' }
+
+    if (user.isBlock || !user.roles.length) throw { error: "Your account was banned" }
+
+    console.log('333')
+    const isPasswordMatch = await bcrypt.compare(oldPassword, user.password)
+    if (!isPasswordMatch) throw { error: 'Old password is incorrect.' }
+
+    user.password = newPassword
+
+    await user.save()
+    res.status(200).json(user)
+  } catch (error) {
+    res.status(400).json(error)
+  }
+}
 
 exports.update = async (req, res) => {
   try {
@@ -380,7 +407,6 @@ exports.update = async (req, res) => {
     res.status(400).json(error)
   }
 }
-
 
 exports.logout = async (req, res) => {
   User
