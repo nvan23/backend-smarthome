@@ -12,6 +12,8 @@ const mqttHandler = require('../../services/mqtt')
 const mqttClient = new mqttHandler()
 mqttClient.connect()
 
+const Time = require('../../utils/time')
+
 const devicesTypes = Object.values(deviceObjTypes) || []
 
 exports.getAllDevices = async (req, res) => {
@@ -34,6 +36,75 @@ exports.getDevice = async (req, res) => {
     if (!device) throw { error: "Device not found" }
 
     res.status(200).json(device)
+  } catch (error) {
+    res.status(400).json(error)
+  }
+}
+
+
+exports.getDeviceLog = async (req, res) => {
+  try {
+    if (!checker.isObjectId(req.params.id)) throw { error: "Invalid input" }
+
+    const { limit, dateStart, dateEnd } = req.query
+    const finalLimit = limit ? limit : 100
+
+    if (dateStart && !Time.isValidDate(dateStart))
+      throw { error: "Input Error - Invalid Date Start Format YYYY-MM-DD" }
+
+    if (dateEnd && !Time.isValidDate(dateEnd))
+      throw { error: "Input Error - Invalid Date End Format YYYY-MM-DD" }
+
+    const device = await Device.findById(req.params?.id)
+
+    if (!device) throw { error: "Device not found" }
+
+    const dateStartValue = dateStart ? new Date(dateStart).getTime() : null
+    const dateEndValue = dateEnd ? new Date(dateEnd).getTime() : null
+    let counter = finalLimit
+
+    let data = !device?._doc?.data?.length ||
+      (!dateStart && !dateEnd) ||
+      (dateStartValue && dateEndValue && dateStartValue > dateEndValue)
+      ? []
+      : device?._doc?.data?.reverse().filter(d => {
+        counter--
+        if (counter < 0) return false
+
+        const date = Time.getValidDate(d?.createdAt)
+
+        if (dateStart === dateEnd) {
+          return date === dateStart
+        }
+
+        if (dateStartValue && !dateEndValue) {
+          return date === dateStart
+        }
+
+        if (!dateStartValue && dateEndValue) {
+          return date === dateEnd
+        }
+
+        if (dateStartValue && dateEndValue && dateStartValue < dateEndValue) {
+          const dateValue = date ? new Date(date).getTime() : null
+          return dateValue >= dateStartValue && dateValue <= dateEndValue
+        }
+      })
+
+    delete device._doc.data
+    delete device._doc.latestGasWarnedAt
+    delete device._doc.latestTemperatureWarnedAt
+    delete device._doc.autoRun
+
+    res.status(200).json({
+      limit: finalLimit,
+      dateStart: dateStart ? dateStart : null,
+      dateEnd: dateEnd ? dateEnd : null,
+      content: {
+        ...device._doc,
+        data,
+      }
+    })
   } catch (error) {
     res.status(400).json(error)
   }
