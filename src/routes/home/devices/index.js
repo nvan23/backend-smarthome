@@ -11,6 +11,9 @@ router.get('/', deviceController.getAllDevices)
 // get a device
 router.get('/:id', deviceController.getDevice)
 
+// get a device
+router.get('/:id/log', deviceController.getDeviceLog)
+
 // update information of a device
 router.put('/:id', deviceController.update)
 
