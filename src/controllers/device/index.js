@@ -41,13 +41,14 @@ exports.getDevice = async (req, res) => {
   }
 }
 
-
 exports.getDeviceLog = async (req, res) => {
   try {
     if (!checker.isObjectId(req.params.id)) throw { error: "Invalid input" }
 
     const { limit, dateStart, dateEnd } = req.query
-    const finalLimit = limit ? limit : 100
+    const isValidLimit = Number.isInteger(Number(limit))
+
+    if (limit && !isValidLimit) throw { error: "Invalid limit" }
 
     if (dateStart && !Time.isValidDate(dateStart))
       throw { error: "Input Error - Invalid Date Start Format YYYY-MM-DD" }
@@ -61,15 +62,17 @@ exports.getDeviceLog = async (req, res) => {
 
     const dateStartValue = dateStart ? new Date(dateStart).getTime() : null
     const dateEndValue = dateEnd ? new Date(dateEnd).getTime() : null
-    let counter = finalLimit
 
+    let counter = parseInt(limit)
     let data = !device?._doc?.data?.length ||
       (!dateStart && !dateEnd) ||
       (dateStartValue && dateEndValue && dateStartValue > dateEndValue)
       ? []
       : device?._doc?.data?.reverse().filter(d => {
-        counter--
-        if (counter < 0) return false
+        if (limit && isValidLimit) {
+          if (!counter) return false
+          --counter
+        }
 
         const date = Time.getValidDate(d?.createdAt)
 
@@ -97,7 +100,7 @@ exports.getDeviceLog = async (req, res) => {
     delete device._doc.autoRun
 
     res.status(200).json({
-      limit: finalLimit,
+      limit,
       dateStart: dateStart ? dateStart : null,
       dateEnd: dateEnd ? dateEnd : null,
       content: {
