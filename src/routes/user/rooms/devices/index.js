@@ -26,4 +26,10 @@ router.patch('/:id/turn-on', requireInRoom(), deviceController.turnOn(true))
 // turn off device of a room
 router.patch('/:id/turn-off', requireInRoom(), deviceController.turnOn(false))
 
+// turn on device of a room
+router.patch('/:id/timer/turn-on', requireInRoom(), deviceController.turnOnTimer(true))
+
+// turn off device of a room
+router.patch('/:id/timer/turn-off', requireInRoom(), deviceController.turnOnTimer(false))
+
 module.exports = router

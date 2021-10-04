@@ -2,6 +2,7 @@ var moment = require('moment')
 moment().format()
 
 const DATE_FORMAT = 'YYYY-MM-DD'
+const TIME_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 
 exports.lt10Minutes = time => {
   return !time ? false : new Date(new Date().getTime() - new Date(time).getTime()).getMinutes() < 10
@@ -12,5 +13,22 @@ exports.isValidDate = date => {
 }
 
 exports.getValidDate = date => {
-  return new Date(date).toISOString().slice(0,10) 
+  return new Date(date).toISOString().slice(0, 10)
 }
+
+exports.isValidTime = time => {
+  return moment(time, TIME_FORMAT, true).isValid()
+}
+
+exports.getSeconds = time => {
+  const from = new Date().getSeconds()
+  const to = new Date(time).getSeconds()
+  return to - from
+}
+
+exports.isValidFutureTime = time => {
+  const from = new Date().getTime()
+  const to = new Date(time).getTime()
+  return from < to
+}
+

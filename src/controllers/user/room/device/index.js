@@ -10,6 +10,8 @@ const mqttHandler = require('../../../../services/mqtt')
 const mqttClient = new mqttHandler()
 mqttClient.connect()
 
+const Time = require('../../../../utils/time')
+
 exports.getAllDevices = async (req, res) => {
   try {
     Room
@@ -110,6 +112,47 @@ exports.turnOn = (status) => {
 
       device.isLive = status
       await device.save()
+
+      res.status(200).json({
+        deviceId: device?.id,
+        isLive: device?.isLive,
+      })
+    } catch (error) {
+      res.status(400).json(error)
+    }
+  }
+}
+
+exports.turnOnTimer = (status) => {
+  return async function (req, res) {
+    try {
+      const { time } = req.body
+      if (!time) throw { error: "Invalid Error - Empty Time" }
+
+      if (!Time.isValidTime(time))
+        throw { error: "Invalid time format input" }
+
+      if (!Time.isValidFutureTime(time))
+        throw { error: "Invalid time input - This time is in the past" }
+
+      if (!checker.isObjectId(req?.params?.id))
+        throw { error: "Invalid input" }
+
+      const device = await Device.findById(req?.params?.id)
+      if (!device) throw { error: "Device not found." }
+
+      if (device?.roomId?.toString() !== req?.room?.id?.toString())
+        throw { error: "This device not in room" }
+
+      const seconds = Time.getSeconds(time) * 1000 - 2
+
+      const action = setTimeout(async () => {
+        mqttClient.publish(device?.topic || 'unknown', status ? '1' : '0')
+
+        device.isLive = status
+        await device.save()
+        clearTimeout(action)
+      }, seconds)
 
       res.status(200).json({
         deviceId: device?.id,
